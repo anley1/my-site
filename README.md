@@ -1,2 +1,2 @@
 # my-site
-A little about myself 🧑💻🛠️
+Personal website 🧑💻🛠️
