@@ -10,6 +10,10 @@ const myIdentity = {
 }
 
 const skills = ["JavaScript", "Python", "React", "Astro", "Netlify"];
+
+const skillColor = "navy";
+const fontWeight = "bold";
+const textCase = "lowercase";
 ---
 
 <html lang="en">
@@ -19,6 +23,17 @@ const skills = ["JavaScript", "Python", "React", "Astro", "Netlify"];
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{pageTitle}</title>
+		<style define:vars={{skillColor, fontWeight, textCase}}>
+			h1 {
+				color: purple;
+				font-size: 4rem;
+			}
+			.skill {
+				color: (--skillColor);
+				font-weight: (--fontWeight);
+				text-transform: (--textCase);
+			}
+		</style>
 	</head>
 	<body>
 		<a href="/">Home</a>
@@ -35,7 +50,7 @@ const skills = ["JavaScript", "Python", "React", "Astro", "Netlify"];
 		</ul>
 		<ul>
 			<p>My skills are</p>
-			{skills.map(i => <li>{i}</li>)}
+			{skills.map(i => <li class="skill">{i}</li>)}
 		</ul>
 	</body>
 </html>
