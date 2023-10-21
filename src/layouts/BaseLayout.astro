@@ -12,15 +12,11 @@ const {pageTitle} = Astro.props;
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Alex Leye</title>
+		<title>{pageTitle}</title>
 	</head>
 	<body>
 		<Header />
-		<h1>Alex's Site</h1>
 		<slot />
-		<p>Hi! My name is Alex and I am working as a Software/Network Engineer in Melbourne, Australia. I studied CS and Electrical Engineering at University.
-			I enjoy being on the terminal and learning new technolgies. I also enjoy programming language design with a soft spot for the functional paradigm.
-		</p>
 		<Footer />
 		<script>
 			import "../scripts/menu.js";
