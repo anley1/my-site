@@ -19,5 +19,10 @@ import Footer from '../components/Footer.astro';
 			I enjoy being on the terminal and learning new technolgies. I also enjoy programming language design with a soft spot for the functional paradigm.
 		</p>
 		<Footer />
+		<script>
+			document.querySelector('.hamburger')?.addEventListener('click', () => {
+				document.querySelector('.nav-links')?.classList.toggle('expanded');
+			})
+		</script>
 	</body>
 </html>
