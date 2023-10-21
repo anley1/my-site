@@ -9,7 +9,6 @@ image:
     alt: 'The full Astro logo.'
 tags: ["astro", "blogging"]
 ---
-
 ## Blog Topics
 
 1. **Programming Languages**: discuss experiments and programs written in different languages  
