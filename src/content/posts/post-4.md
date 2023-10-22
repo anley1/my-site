@@ -1,5 +1,4 @@
 ---
-layout: ../../layouts/MarkdownPostLayout.astro
 title: Astro Blog 4
 author: Alex Leye
 description: "This will appear"

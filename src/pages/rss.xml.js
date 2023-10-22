@@ -1,11 +1,18 @@
-import rss, { pagesGlobToRssItems } from '@astrojs/rss';
+import rss from '@astrojs/rss';
+import { getCollection } from 'astro:content';
 
 export async function GET(context) {
-  return rss({
-    title: 'Alex Leye | Blog',
-    description: 'my personal blog for random programming experiments and thoughts.',
-    site: context.site,
-    items: await pagesGlobToRssItems(import.meta.glob('./**/*.md')),
-    customData: `<language>en-au</language>`,
-  });
+    const posts = await getCollection("posts");
+    return rss({
+        title: 'Alex Leye | Blog',
+        description: 'my personal blog for random programming experiments and thoughts.',
+        site: context.site,
+        items: posts.map((post) => ({
+            title: post.data.title,
+            pubDate: post.data.pubDate,
+            description: post.data.description,
+            link: `/posts/${post.slug}`,
+        })),
+        customData: `<language>en-au</language>`,
+    });
 }

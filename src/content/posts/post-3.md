@@ -1,5 +1,4 @@
 ---
-layout: ../../layouts/MarkdownPostLayout.astro
 title: 'Hello'
 pubDate: 2022-07-15
 description: 'Learning'
