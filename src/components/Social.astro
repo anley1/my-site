@@ -1,14 +1,57 @@
 ---
-const { platform, username } = Astro.props;
+import { Icon } from "astro-icon";
+
+/** 
+	Uses https://github.com/natemoo-re/astro-icon#readme
+	Find icons @ https://icones.js.org/
+*/
+const socialLinks: Array<{
+	name: string;
+	friendlyName: string;
+	link: string;
+	isWebmention?: boolean;
+}> = [
+	{
+		name: "mdi:github",
+		friendlyName: "Github",
+		link: "https://github.com/anley1",
+	},
+	{
+		name: "mdi:mastodon",
+		friendlyName: "Mastodon",
+		link: "#",
+	},
+	{
+		name: "mdi:linkedin",
+		friendlyName: "LinkedIn",
+		link: "#",
+	},
+	{
+		name: "mdi:email",
+		friendlyName: "email",
+		link: "mailto:alexnleye@gmail.com",
+		isWebmention: true,
+	},
+];
 ---
 
-<a href={`https://www.${platform}.com/${username}`}>{platform}</a>
-
-<style>
-    a {
-        padding: 0.5rem 1rem;
-        background-color: black;
-        color: rgb(var(--gray));
-        text-decoration: none;
-    }
-</style>
+<div class="flex flex-wrap items-end gap-x-4">
+	<p>Find me on</p>
+	<ul class="flex flex-1 items-center gap-x-2 sm:flex-initial">
+		{
+			socialLinks.map(({ link, name, friendlyName, isWebmention }) => (
+				<li class="flex">
+					<a
+						class="inline-block p-1 sm:hover:text-link"
+						href={link}
+						target="_blank"
+						rel={`noopener noreferrer ${isWebmention ? "me authn" : ""}`}
+					>
+						<Icon class="h-6 w-6" name={name} aria-hidden="true" focusable="false" />
+						<span class="sr-only">{friendlyName}</span>
+					</a>
+				</li>
+			))
+		}
+	</ul>
+</div>
