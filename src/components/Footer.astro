@@ -1,6 +1,8 @@
 ---
 const today = new Date();
+import Social from "./Social.astro";
 ---
-<footer class="mt-auto flex w-full flex-col items-center justify-center gap-y-2 pb-5 pt-20 text-center align-top text-gray-500 sm:flex-row sm:justify-between sm:text-xs">
-	&copy; {today.getFullYear()} Your name here. All rights reserved.
+<footer class="mt-auto flex w-full flex-col items-center justify-center gap-y-2 pb-5 pt-20 text-center align-top text-gray-400 sm:flex-row sm:justify-between sm:text-xs">
+	&copy; Alex Leye {today.getFullYear()}
+	<Social />
 </footer>

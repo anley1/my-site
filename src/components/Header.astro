@@ -1,16 +1,45 @@
 ---
 import Hamburger from './Hamburger.astro';
 import ThemeIcon from './ThemeIcon.astro';
+
+const navLinks: Array<{
+    title: string,
+    path: string
+}> = [
+    {
+        title: "Home",
+        path: "/"
+    },
+    {
+        title: "About",
+        path: "/about/"
+    },
+    {
+        title: "Blog",
+        path: "/blog/"
+    },
+    {
+        title: "Tags",
+        path: "/tags/"
+    },
+
+];
 ---
 <header class="group relative mb-28 flex items-center justify-center text-center align-top gap-x-6 sm:ps-[4.5rem]">
     <Hamburger />
-    <nav>
-        <div class="nav-links flex justify-between gap-x-2 sm:gap-x-4 md:gap-x-6">
-            <a href="/">Home</a>
-            <a href="/about/">About</a>
-            <a href="/blog/">Blog</a>
-            <a href="/tags/">Tags</a>
-        </div>
+    <nav
+    class="nav-links flex justify-between sm:items-center divide-x divide-dashed divide-gray-500 sm:rounded-none" 
+    >
+        {
+            navLinks.map((n) => (
+                <a
+                    href={n.path}
+                    class="px-4 py-4 sm:py-0 sm:hover:underline"
+                >
+                    {n.title}
+                </a>
+            ))
+        }
     </nav>
     <ThemeIcon />
 </header>
