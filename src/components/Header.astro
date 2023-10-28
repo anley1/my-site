@@ -1,10 +1,16 @@
 ---
 import Hamburger from './Hamburger.astro';
-import Navigation from './Navigation.astro';
 import ThemeIcon from './ThemeIcon.astro';
 ---
-<header class="group relative mb-28 flex items-center justify-center text-center align-top gap-y-6 sm:ps-[4.5rem]">
-        <Hamburger />
-        <Navigation />
-        <ThemeIcon />
+<header class="group relative mb-28 flex items-center justify-center text-center align-top gap-x-6 sm:ps-[4.5rem]">
+    <Hamburger />
+    <nav>
+        <div class="nav-links flex justify-between gap-x-2 sm:gap-x-4 md:gap-x-6">
+            <a href="/">Home</a>
+            <a href="/about/">About</a>
+            <a href="/blog/">Blog</a>
+            <a href="/tags/">Tags</a>
+        </div>
+    </nav>
+    <ThemeIcon />
 </header>
