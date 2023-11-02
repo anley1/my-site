@@ -1,12 +1,12 @@
 ---
-title: 'My First Blog Post'
+title: 'WSL on a corporate VPN'
 pubDate: 2022-07-01
-description: 'Welcome to my _new blog_!'
+description: 'For when you are given a Windows machine, fear not!'
 author: 'Alex Leye'
 image:
-    url: 'https://docs.astro.build/assets/full-logo-light.png'
-    alt: 'The full Astro logo.'
-tags: ["astro", "blogging"]
+    url: '/wsl-welcome.png'
+    alt: 'WSL welcome image.'
+tags: ["linux", "blogging"]
 ---
 ## Blog Topics
 
