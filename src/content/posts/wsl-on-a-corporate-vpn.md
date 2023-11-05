@@ -8,12 +8,10 @@ image:
     alt: 'WSL welcome image.'
 tags: ["linux", "blogging"]
 ---
-## Blog Topics
+## WSL on a Corporate VPN
+Working in a corporate environment, you may often find yourself given a Lenovo Thinkpad and told to get to work.
+The problem is, this machine runs Windows and that means you can't run anything without a world of pain. 
 
-1. **Programming Languages**: discuss experiments and programs written in different languages  
-
-2. **Setup**: different `env` setups
-
-## What's next
-
-I will keep updating this page
+The good news is, even Microsoft knew this. Rather than re-inventing the open-source wheel for their OS, they instead
+brought linux into their ecosystem in a round-about way. Windows Subsystem for Linux (WSL) and in particular WSL2 provide
+a linux emulation inside your Windows environment by utilising hardware-enabled Hyper-V.
