@@ -11,10 +11,12 @@ const { frontmatter } = Astro.props;
 
     <div class="tags">
     {frontmatter.tags.map((tag: string) => (
-        <p class="tag"><a href={`/tags/${tag}`}>{tag}</a></p>
+      <p class="tag"><a href={`/tags/${tag}`}>{tag}</a></p>
     ))}
 
-    <slot />
+    <div class="prose dark:prose-invert">
+      <slot />
+    </div>
 </BaseLayout>
 <style>
   a {
