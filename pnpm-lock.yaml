@@ -26,9 +26,15 @@ dependencies:
   astro-icon:
     specifier: ^0.8.1
     version: 0.8.1
+  mdast-util-to-string:
+    specifier: ^4.0.0
+    version: 4.0.0
   preact:
     specifier: ^10.6.5
     version: 10.18.1
+  reading-time:
+    specifier: ^1.5.0
+    version: 1.5.0
   rehype-accessible-emojis:
     specifier: ^0.3.2
     version: 0.3.2
@@ -3725,6 +3731,10 @@ packages:
     engines: {node: '>=8.10.0'}
     dependencies:
       picomatch: 2.3.1
+
+  /reading-time@1.5.0:
+    resolution: {integrity: sha512-onYyVhBNr4CmAxFsKS7bz+uTLRakypIe4R+5A824vBSkQy/hB3fZepoVEf8OVAxzLvK+H/jm9TzpI3ETSm64Kg==}
+    dev: false
 
   /rehype-accessible-emojis@0.3.2:
     resolution: {integrity: sha512-kChZo+EZsuFQYHUPu6kOZFjDrG7UtQdGxkrCvHBVo9ariKPL6S68QdPVxLxwcAtZSRZIXZhDuTJHgIM8KW24Qw==}
