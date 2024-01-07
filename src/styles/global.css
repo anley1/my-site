@@ -50,4 +50,12 @@
 		animation: 1.5s fadeInUp;
 	}
 
+	ul {
+		list-style-type: disc;  /* or another style like 'circle' or 'square' */
+		padding-left: 30px;     /* Adjust left padding for indentation */
+		margin-left: 10;
+		margin-top: 10;
+		margin-bottom: 1em;
+	  }
+
 }

@@ -7,8 +7,8 @@ const pageTitle = "Blog";
 
 ---
 <BaseLayout pageTitle={pageTitle}>
-	<h1>Blog</h1>
-	<p>Check out my latest posts</p>
+	<h1 class="title">Blog</h1>
+	<p class="mt-8">Check out my latest posts</p>
 	<ul>
 		{allPosts.map((post) => <BlogPost url={`/posts/${post.slug}`} title={post.data.title} /> )}
 	</ul>
