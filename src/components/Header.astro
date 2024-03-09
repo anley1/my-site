@@ -42,4 +42,15 @@ const navLinks: Array<{
         }
     </nav>
     <ThemeIcon />
+    <script>
+        // Before page load
+        (() => {
+            const storedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+            if (storedTheme === 'light') {
+                document.documentElement.classList.add('light');
+            } else {
+                document.documentElement.classList.remove('light');
+            }
+        })();
+    </script>
 </header>
