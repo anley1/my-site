@@ -42,15 +42,14 @@ const navLinks: Array<{
         }
     </nav>
     <ThemeIcon />
-    <script>
-        // Before page load
-        (() => {
-            const storedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-            if (storedTheme === 'light') {
-                document.documentElement.classList.add('light');
-            } else {
-                document.documentElement.classList.remove('light');
-            }
-        })();
+    <script is:inline>
+        // set theme before page load
+        // default to dark theme, only if it is not set in storage
+        const storedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'dark');
+        if (storedTheme === 'light') {
+            document.documentElement.classList.remove('dark');
+        } else {
+            document.documentElement.classList.add('dark');
+        }
     </script>
 </header>
