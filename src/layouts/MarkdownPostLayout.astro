@@ -5,37 +5,24 @@ const { minutesRead } = Astro.props.frontmatter;
 ---
 
 <BaseLayout pageTitle={frontmatter.pageTitle}>
-    <p>Written by {frontmatter.author}</p>
-    <p>Published on: {frontmatter.pubDate.toString().slice(0,10)}</p>
-    <p>{minutesRead}</p>
-    <p><em>{frontmatter.description}</em></p>
-    <img src={frontmatter.image.url} width="300" alt={frontmatter.image.alt} />
+    <div class="mt-8">
+        <p class="text-sm text-gray-600 dark:text-gray-400">Written by {frontmatter.author}</p>
+        <p class="text-sm text-gray-600 dark:text-gray-400">Published on: {frontmatter.pubDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
+        <p class="text-sm text-gray-600 dark:text-gray-400">{minutesRead}</p>
+        <p class="mt-4 italic text-gray-700 dark:text-gray-300"><em>{frontmatter.description}</em></p>
+        
+        <img src={frontmatter.image.url} width="300" alt={frontmatter.image.alt} class="mt-4 rounded-lg" />
 
-    <div class="tags">
-    {frontmatter.tags.map((tag: string) => (
-      <p class="tag"><a href={`/tags/${tag}`}>{tag}</a></p>
-    ))}
+        <div class="mt-6 flex flex-wrap gap-2">
+            {frontmatter.tags.map((tag: string) => (
+                <a href={`/tags/${tag}`} class="inline-block px-3 py-1 text-sm border border-gray-300 dark:border-gray-600 rounded-md bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                    {tag}
+                </a>
+            ))}
+        </div>
+    </div>
 
-    <div class="prose dark:prose-invert">
-      <slot />
+    <div class="mt-8 prose prose-sm dark:prose-invert max-w-none">
+        <slot />
     </div>
 </BaseLayout>
-<style>
-  a {
-    color: #00539F;
-  }
-
-  .tags {
-    display: flex;
-    flex-wrap: wrap;
-  }
-
-  .tag {
-    margin: 0.25em;
-    border: dotted 1px #a1a1a1;
-    border-radius: .5em;
-    padding: .5em 1em;
-    font-size: 1.15em;
-    background-color: #F8FCFD;
-  }
-</style>
