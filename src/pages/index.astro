@@ -8,7 +8,8 @@ const pageTitle = "Alex Leye";
 <BaseLayout pageTitle={pageTitle}>
 	<h1 class="title">Alex's Site</h1>
 		<Greeting client:load messages={["Hi"]} />
-	<p class="mt-8">My name is Alex and I am a
+	<p class="mt-8">
+		My name is Alex and I am a
 		<span class="inline-block relative whitespace-nowrap">
 			Backend Software Engineer
 			<svg
@@ -27,19 +28,20 @@ const pageTitle = "Alex Leye";
 		based in Melbourne, Australia. I studied CS and Electrical Engineering at University, and I'm passionate about software because I think it's the most powerful tool we have to improve the world. </br> </br> 
 		
 		At the moment, I specialise in building microservices with Java Spring Boot, leveraging AWS cloud services to build resilient and efficient and solutions. Before that, I have worked in various backend roles, such as web development and as a research assistant for optimising UI rendering for 3D layouts. While at university, I also had the opportunity to teach mobile web app development and programming paradigms - such as functional programming and OOP. </br> </br>
-
+		<img 
+			src="/working.gif" 
+			alt="working at the table. Creative Commons License (CC)." 
+			class="float-right ml-4 mb-2 h-auto sm:max-w-xs object-scale-down" 
+			style="width: 150px; height: 150px;"
+		/>
 		Since working with Transformer models for my final year project in real-time object detection, I've been excited to see how AI will shape the world, and I'm eager to be a part of it. </br> </br>
-		
-		When I'm not not coding, I enjoy watching movies, hiking, and finding good eating spots. </br> </br>
 
-		Let's connect!
+		
+		When I'm not not coding, I enjoy watching movies, hiking, and finding good eating spots. Let's connect!
 
 	</p>
 	<!-- <div class="mt-8 flex flex-1 items-center gap-x-2 sm:flex-initial">
 		<p>Find me on </p>
 		<Social />
 	</div> -->
-	<div class="flex mt-auto">
-		<img src="/working.gif" alt="working at the table. Creative Commons License (CC)." class="flex mt-auto ml-auto h-auto sm:max-w-xs object-scale-down" style="width: 150px; height: 150px;">
-	</div>
 </BaseLayout>
