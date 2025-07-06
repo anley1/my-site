@@ -1,0 +1,48 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const pageTitle = "Library";
+
+const recommendations = {
+	books: [
+		"1984",
+	],
+	shows: [
+		"Mr. Robot",
+		"Severance",
+	],
+	movies: [
+		"Parasite",
+		"The Social Network",
+	]
+};
+---
+
+<BaseLayout pageTitle={pageTitle}>
+	<h1 class="title">Alex's Library</h1>
+	<p class="text-sm text-gray-600 dark:text-gray-400 mb-6">
+		Things I recommend reading, watching, and listening to.
+	</p>
+	<section class="mt-2">
+		<div class="mt-6">
+			<h3 class="text-lg font-semibold mb-2">Books</h3>
+			<ul class="list-disc list-inside space-y-1">
+				{recommendations.books.map(book => <li>{book}</li>)}
+			</ul>
+		</div>
+
+		<div class="mt-6">
+			<h3 class="text-lg font-semibold mb-2">TV Shows</h3>
+			<ul class="list-disc list-inside space-y-1">
+				{recommendations.shows.map(show => <li>{show}</li>)}
+			</ul>
+		</div>
+
+		<div class="mt-6">
+			<h3 class="text-lg font-semibold mb-2">Movies</h3>
+			<ul class="list-disc list-inside space-y-1">
+				{recommendations.movies.map(movie => <li>{movie}</li>)}
+			</ul>
+		</div>
+	</section>
+</BaseLayout>

@@ -1,0 +1,77 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const pageTitle = "Now";
+const lastUpdated = "6th July 2025";
+
+const currentlyReading = [
+	"Apology (Plato)",
+];
+
+const currentlyWatching = [
+	"Severance",
+];
+---
+
+<BaseLayout pageTitle={pageTitle}>
+	<h1 class="title">Alex's Space</h1>
+	<p class="text-sm text-gray-600 dark:text-gray-400 mb-6">
+		This is a space for what I'm doing right now. Inspired by
+		<a href="https://nownownow.com/about" target="_blank" rel="noopener noreferrer" class="underline">what's a now page?</a>
+		<br />
+		<!-- <span class="text-sm">Last updated: {lastUpdated}</span> -->
+	</p>
+	
+	<p>Updated on 6th July 2025 from Melbourne, Australia. We're in the middle of winter here, so I've been rugging up.</p>
+
+<section class="mt-4">
+<h2 class="text-lg font-bold mb-2">happening</h2>
+I've wanted to create my blog for some time now, so I'm tracking down the articles I have strewn across the place (such as my work's confluence) and putting them here (<a href="/blog" target="_blank" rel="noopener noreferrer"  class="underline">blog</a>). I am interested in philosophy, and I've been reading up on Plato's works.
+	<a title="© Marie-Lan Nguyen / Wikimedia Commons (modified)" href="https://commons.wikimedia.org/wiki/File:Plato_Silanion_Musei_Capitolini_MC1377.jpg">
+		<img 
+		alt="Plato, copy of the portrait made by Silanion ca. 370 BC for the Academia in Athens" 
+		src="/plato.png"
+		class="float-right ml-4 mb-2 h-auto sm:max-w-xs object-scale-down" 
+		style="width: 100px; height: 100px;"
+		>
+	</a>
+	So after Euthyphro, I am now reading Plato's Apology.
+</br></br>
+Oh also, I've recently gotten into Mahjong thanks to a (very patient) friend of mine teaching me and some others.
+<a title="Cangjie6, CC BY-SA 4.0 &lt;https://creativecommons.org/licenses/by-sa/4.0&gt;, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:MJd3-.svg">
+	<img 
+	alt="The Mahjong tile “White dragon” (白)."
+	src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/MJd3-.svg/256px-MJd3-.svg.png?20220809040732"
+	class="float-left mr-4 mb-2 h-auto sm:max-w-xs object-scale-down" 
+	style="width: 50px; height: 50px;"
+	>
+</a>
+This is a super fun game and I hope to play a bunch more. I recently did a 'Mahjong club' on Sunday morning where (un)healthy amounts of tea was drunk.
+</section>
+
+
+<section class="mt-4">
+	<h2 class="text-lg font-bold mb-2">learning</h2>
+I've also been continuing to data structures and algorithms (DSA) and system design principles. For DSA I'm going through in Java and conjuring delusions of becoming a competitive programmer. Meanwhile for sysdesign I am following the “Grokking the System Design Interview” and various Youtube channels.
+</section>
+
+<section class="mt-4">
+	<h2 class="text-lg font-bold mb-2">dev</h2>
+There's been an insane amount of movement in the AI space, as usual, and I've been tinkering with the latest tech. Here's a great talk (<a href="https://www.youtube.com/watch?v=LCEmiRjPEtQ" target="_blank" rel="noopener noreferrer" class="underline">link</a>) from the one-and-only Andrej Karpathy at Y Combinator, on Code 1.0, 2,0 and now 3.0 with LLMs as “human-like” machines. Also, I want to learn more about MCP servers and see if I can do anything useful with it at work for example. 
+</section>
+	
+	<!-- <section class="mt-2">
+		<h2 class="text-xl font-bold mb-4">Currently Reading</h2>
+		<ul class="list-disc list-inside space-y-2">
+			{currentlyReading.map(book => <li>{book}</li>)}
+		</ul>
+	</section>
+
+	<section class="mt-8">
+		<h2 class="text-xl font-bold mb-4">Currently Watching</h2>
+		<ul class="list-disc list-inside space-y-2">
+			{currentlyWatching.map(show => <li>{show}</li>)}
+		</ul>
+	</section> -->
+
+</BaseLayout>
