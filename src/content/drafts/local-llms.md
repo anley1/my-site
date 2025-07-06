@@ -3,10 +3,10 @@ title: 'ChatGPT-at-home: Experimenting with Local LLMs'
 pubDate: 2023-05-24
 description: 'Attempting to make AGI at home.'
 author: 'Alex Leye'
-image:
-    url: '/apple-touch-icon.png'
-    alt: 'Local LLMs'
-tags: ["linux", "blogging"]
+# image:
+#     url: '/apple-touch-icon.png'
+#     alt: 'Local LLMs'
+tags: ["AI", "llm"]
 ---
 ## Contents
 

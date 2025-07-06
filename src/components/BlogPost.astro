@@ -1,4 +1,9 @@
 ---
-const {url, title} = Astro.props;
+const {url, title, pubDate} = Astro.props;
 ---
-<li><a href={url} class="text-sm hover:text-gray-600 dark:hover:text-gray-400">{title}</a></li>
+<li class="mb-3">
+    <a href={url} class="text-base hover:text-gray-600 dark:hover:text-gray-400 font-medium">{title}</a>
+    <div class="text-xs text-gray-500 dark:text-gray-400 mt-1">
+        {pubDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}
+    </div>
+</li>
