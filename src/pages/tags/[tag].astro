@@ -23,6 +23,6 @@ const { posts } = Astro.props;
     <h1 class="title">Posts tagged with "{tag}"</h1>
     <p class="mt-8 text-sm text-gray-600 dark:text-gray-400">{posts.length} post{posts.length === 1 ? '' : 's'} found</p>
     <ul class="mt-4">
-        {posts.map((post) => <BlogPost url={`/posts/${post.slug}`} title={post.data.title}/>)}
+        {posts.map((post) => <BlogPost url={`/posts/${post.slug}`} title={post.data.title} pubDate={post.data.pubDate}/>)}
     </ul>
 </BaseLayout>
