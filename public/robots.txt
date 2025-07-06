@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.alexleye.com/sitemap.xml
+Sitemap: https://www.alexleye.com/sitemap-index.xml
