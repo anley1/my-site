@@ -8,11 +8,11 @@ const pageTitle = "Blog";
 ---
 <BaseLayout pageTitle={pageTitle}>
 	<h1 class="title">Blog</h1>
-	
+
 	<ul class="mt-8">
 		{allPosts.map((post) => <BlogPost url={`/posts/${post.slug}`} title={post.data.title} pubDate={post.data.pubDate} /> )}
 	</ul>
 	<div class="flex mt-auto">
-		<img src="/bonsai-tree.png" alt="Bonsai tree. Creative Commons License (CC)." class="flex mt-auto ml-auto h-auto sm:max-w-xs object-scale-down" style="width: 200px; height: 200px;">
+		<img src="/bonsai-tree.webp" alt="Bonsai tree. Creative Commons License (CC)." class="flex mt-auto ml-auto h-auto sm:max-w-xs object-scale-down" style="width: 200px; height: 200px;">
 	</div>
 </BaseLayout>
