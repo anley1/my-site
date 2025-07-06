@@ -10,7 +10,7 @@ import tailwind from "@astrojs/tailwind";
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://axley.netlify.app',
+  site: 'https://www.alexleye.com',
   integrations: [mdx(), sitemap(), preact(), tailwind()],
   markdown: {
     remarkPlugins: [remarkToc, remarkReadingTime],
