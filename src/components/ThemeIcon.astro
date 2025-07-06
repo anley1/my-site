@@ -81,11 +81,15 @@
 	});
 
   document.addEventListener('astro:after-swap', () => {
-    if (localStorage.theme === 'light'){
-			document.documentElement.classList.remove('dark');
-		}
-    else {
-			document.documentElement.classList.add('dark');
-		}
+    // use stored theme if available, otherwise use system preference, default to light
+    const storedTheme = localStorage.getItem('theme');
+    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const theme = storedTheme || (systemPrefersDark ? 'dark' : 'light');
+    
+    if (theme === 'light') {
+      document.documentElement.classList.remove('dark');
+    } else {
+      document.documentElement.classList.add('dark');
+    }
   });
 </script>

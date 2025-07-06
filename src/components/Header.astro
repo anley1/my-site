@@ -43,9 +43,12 @@ const navLinks: Array<{
     <ThemeIcon />
     <script is:inline>
         // set theme before page load
-        // default to dark theme, only if it is not set in storage
-        const storedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-        if (storedTheme === 'light') {
+        // use stored theme if available, otherwise use system preference, default to light
+        const storedTheme = localStorage.getItem('theme');
+        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const theme = storedTheme || (systemPrefersDark ? 'dark' : 'light');
+        
+        if (theme === 'light') {
             document.documentElement.classList.remove('dark');
         } else {
             document.documentElement.classList.add('dark');
