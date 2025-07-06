@@ -3,6 +3,7 @@ import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { ViewTransitions } from 'astro:transitions';
+import { SITE_DESC } from '../consts';
 
 const {pageTitle} = Astro.props;
 ---
@@ -16,7 +17,46 @@ const {pageTitle} = Astro.props;
 		<link rel="manifest" href="/site.webmanifest">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta name="generator" content={Astro.generator} />
+		<meta name="description" content={SITE_DESC} />
+		<meta name="author" content="Alex Leye" />
+		<link rel="canonical" href={Astro.url} />
+		<meta name="language" content="en" />
+		
+		<!-- Open Graph / Facebook -->
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content={Astro.url} />
+		<meta property="og:title" content={pageTitle} />
+		<meta property="og:description" content={SITE_DESC} />
+		<meta property="og:image" content="https://www.alexleye.com/bonsai-tree-s.webp" />
+		
+		<!-- Twitter -->
+		<meta property="twitter:card" content="summary_large_image" />
+		<meta property="twitter:url" content={Astro.url} />
+		<meta property="twitter:title" content={pageTitle} />
+		<meta property="twitter:description" content={SITE_DESC} />
+		<meta property="twitter:image" content="https://www.alexleye.com/bonsai-tree-s.webp" />
+		
 		<title>{pageTitle}</title>
+		
+		<!-- Structured Data -->
+		<script type="application/ld+json">
+			{
+				"@context": "https://schema.org",
+				"@type": "Person",
+				"name": "Alex Leye",
+				"jobTitle": "Backend Software Engineer",
+				"worksFor": {
+					"@type": "Organization",
+					"name": "Software Engineering"
+				},
+				"url": "https://www.alexleye.com",
+				"sameAs": [
+					"https://github.com/anley1",
+					"https://www.linkedin.com/in/alex-leye/"
+				],
+				"description": "Backend Software Engineer based in Melbourne, Australia specializing in high-performance API microservices on AWS cloud services."
+			}
+		</script>
 		
 		<!-- Preload images -->
 		<link rel="preload" as="image" href="/working-s.webp" />
