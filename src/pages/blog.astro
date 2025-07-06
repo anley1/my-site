@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import BlogPost from "../components/BlogPost.astro";
+import { Image } from 'astro:assets';
 const allPosts = await getCollection("posts");
 const pageTitle = "Blog";
 
@@ -13,6 +14,14 @@ const pageTitle = "Blog";
 		{allPosts.map((post) => <BlogPost url={`/posts/${post.slug}`} title={post.data.title} pubDate={post.data.pubDate} /> )}
 	</ul>
 	<div class="flex mt-auto">
-		<img src="/bonsai-tree.webp" alt="Bonsai tree. Creative Commons License (CC)." class="flex mt-auto ml-auto h-auto sm:max-w-xs object-scale-down" style="width: 200px; height: 200px;">
+		<Image 
+		src="/bonsai-tree-s.webp"
+		width={200}
+		height={200} 
+		alt="Bonsai tree. Creative Commons License (CC)." 
+		class="flex mt-auto ml-auto h-auto sm:max-w-xs object-scale-down" 
+		style="width: 200px; height: 200px;"
+		loading="eager"
+	/>
 	</div>
 </BaseLayout>

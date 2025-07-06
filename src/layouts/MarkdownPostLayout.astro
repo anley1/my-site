@@ -1,5 +1,6 @@
 ---
 import BaseLayout from './BaseLayout.astro';
+import { Image } from 'astro:assets';
 const { frontmatter } = Astro.props;
 const { minutesRead } = Astro.props.frontmatter;
 ---
@@ -32,7 +33,7 @@ const { minutesRead } = Astro.props.frontmatter;
 
         <!-- Featured Image -->
         {frontmatter.image?.url && frontmatter.image?.alt && (
-            <img src={frontmatter.image.url} alt={frontmatter.image.alt} class="w-full max-w-lg mx-auto rounded-lg shadow-md mb-6" />
+            <Image src={frontmatter.image.url} alt={frontmatter.image.alt} class="w-full max-w-lg mx-auto rounded-lg shadow-md mb-6" loading="eager" />
         )}
 
         <!-- Content -->

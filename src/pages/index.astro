@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Greeting from '../components/Greeting';
 import Social from '../components/Social.astro';
+import { Image } from 'astro:assets';
 const pageTitle = "Alex Leye";
 ---
 
@@ -28,11 +29,14 @@ const pageTitle = "Alex Leye";
 		based in Melbourne, Australia. I studied CS and Electrical Engineering at Monash University. I'm passionate about software because I think it gives everyone, of all shapes and sizes, the chance to create anything they can imagine.  Also, learning about how mathematics can be translated into the algorithms that power the modern world - from string search algorithms, graph traversal and transformer models - is <em>really cool</em>!
 		</br> </br> 
 		At the moment, I specialise in building high-performance API microservices on AWS cloud services. Before that, I have worked in various backend roles, such as web development and as a research assistant for optimising UI rendering for 3D layouts. While at university, I also had the opportunity to teach mobile web app development and programming paradigms - being an advocate for functional programming and clean, declarative code. </br> </br>
-		<img 
-			src="/working.webp" 
+		<Image 
+			src="/working-s.webp" 
 			alt="working at the table. Creative Commons License (CC)." 
 			class="float-right ml-4 mb-2 h-auto sm:max-w-xs object-scale-down" 
 			style="width: 150px; height: 150px;"
+			width={150}
+			height={150}
+			loading="eager"
 		/>
 
 		When I'm not not coding, I enjoy watching movies, playing games with my friends, and finding good eating spots around Melbourne. 

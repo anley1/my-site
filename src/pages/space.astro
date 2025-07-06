@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { Image } from 'astro:assets';
 
 const pageTitle = "Now";
 const lastUpdated = "6th July 2025";
@@ -28,23 +29,29 @@ const currentlyWatching = [
 <h2 class="text-lg font-bold mb-2">happening</h2>
 I've wanted to create my blog for some time now, so I'm tracking down the articles I have strewn across the place (such as my work's confluence) and putting them here (<a href="/blog" target="_blank" rel="noopener noreferrer"  class="underline">blog</a>). I am interested in philosophy, and I've been reading up on Plato's works.
 	<a title="© Marie-Lan Nguyen / Wikimedia Commons (modified)" href="https://commons.wikimedia.org/wiki/File:Plato_Silanion_Musei_Capitolini_MC1377.jpg">
-		<img 
-		alt="Plato, copy of the portrait made by Silanion ca. 370 BC for the Academia in Athens" 
+		<Image 
 		src="/plato.webp"
+		width={100}
+		height={100}
+		alt="Plato, copy of the portrait made by Silanion ca. 370 BC for the Academia in Athens" 
 		class="float-right ml-4 mb-2 h-auto sm:max-w-xs object-scale-down" 
 		style="width: 100px; height: 100px;"
-		>
+		loading="eager"
+		/>
 	</a>
 	So after Euthyphro, I am now reading Plato's Apology.
 </br></br>
 Oh also, I've recently gotten into Mahjong thanks to a (very patient) friend of mine teaching me and some others.
 <a title="Cangjie6, CC BY-SA 4.0 &lt;https://creativecommons.org/licenses/by-sa/4.0&gt;, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:MJd3-.svg">
-	<img 
+	<Image 
 	alt="The Mahjong tile “White dragon” (白)."
 	src="/mahjong-white-dragon.webp"
+	width={50}
+	height={50}
 	class="float-left mr-4 mb-2 h-auto sm:max-w-xs object-scale-down" 
 	style="width: 50px; height: 50px;"
-	>
+	loading="eager"
+	/>
 </a>
 This is a super fun game and I hope to play a bunch more. I recently did a 'Mahjong club' on Sunday morning where (un)healthy amounts of tea was drunk.
 </section>
