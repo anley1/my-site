@@ -54,9 +54,36 @@ const {pageTitle} = Astro.props;
 					"https://github.com/anley1",
 					"https://www.linkedin.com/in/alex-leye/"
 				],
-				"description": "Backend Software Engineer based in Melbourne, Australia specializing in high-performance API microservices on AWS cloud services."
+				"description": "Backend Software Engineer based in Melbourne, Australia specializing in high-performance API microservices on AWS cloud services.",
+				"image": "https://www.alexleye.com/bonsai-tree-s.webp",
+				"knowsAbout": ["Backend Development", "AWS", "Microservices", "API Design", "Software Engineering"]
 			}
 		</script>
+		
+		<!-- Blog Post Structured Data (if on a blog post) -->
+		{Astro.props.frontmatter && (
+			<script type="application/ld+json">
+				{
+					"@context": "https://schema.org",
+					"@type": "BlogPosting",
+					"headline": Astro.props.frontmatter.title,
+					"description": Astro.props.frontmatter.description,
+					"author": {
+						"@type": "Person",
+						"name": Astro.props.frontmatter.author
+					},
+					"datePublished": Astro.props.frontmatter.pubDate.toISOString(),
+					"publisher": {
+						"@type": "Person",
+						"name": "Alex Leye"
+					},
+					"mainEntityOfPage": {
+						"@type": "WebPage",
+						"@id": Astro.url
+					}
+				}
+			</script>
+		)}
 
 		<!-- Google Analytics -->
 		<meta name="google-site-verification" content="7D082XiKh1jKRqrv_KcvSzpl-dGugaJrh5jZ9S7UviY" />
