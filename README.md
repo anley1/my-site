@@ -1,4 +1,6 @@
 [![Netlify Status](https://api.netlify.com/api/v1/badges/b7f10623-c39b-49ea-a0d0-e8538a488820/deploy-status)](https://app.netlify.com/api/v1/badges/b7f10623-c39b-49ea-a0d0-e8538a488820/deploy-status)
+![Porkbun](https://img.shields.io/badge/Porkbun-Hosting-orange)
+
 
 # Alex Leye - Personal Website
 
