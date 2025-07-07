@@ -42,37 +42,49 @@ const {pageTitle} = Astro.props;
 		<script type="application/ld+json">
 			{
 				"@context": "https://schema.org",
-				"@type": "Person",
-				"name": "Alex Leye",
-				"jobTitle": "Backend Software Engineer",
-				"worksFor": {
-					"@type": "Organization",
-					"name": "Software Engineering"
-				},
+				"@type": "ProfilePage",
+				"name": "Alex Leye - Backend Software Engineer",
 				"url": "https://www.alexleye.com",
-				"sameAs": [
-					"https://github.com/anley1",
-					"https://www.linkedin.com/in/alex-leye/"
-				],
-				"description": "Backend Software Engineer based in Melbourne, Australia specializing in high-performance API microservices on AWS cloud services.",
 				"image": "https://www.alexleye.com/bonsai-tree-s.webp",
-				"knowsAbout": ["Backend Development", "AWS", "Microservices", "API Design", "Software Engineering"]
+				"description": "Backend Software Engineer based in Melbourne, Australia specializing in high-performance API microservices on AWS cloud services.",
+				"mainEntity": {
+					"@type": "Person",
+					"name": "Alex Leye",
+					"jobTitle": "Backend Software Engineer",
+					"url": "https://www.alexleye.com",
+					"sameAs": [
+						"https://github.com/anley1",
+						"https://www.linkedin.com/in/alex-leye/"
+					],
+					"image": "https://www.alexleye.com/bonsai-tree-s.webp",
+					"knowsAbout": ["Backend Development", "AWS", "Microservices", "API Design", "Software Engineering"],
+					"alumniOf": {
+						"@type": "Organization",
+						"name": "Monash University"
+					},
+					"address": {
+						"@type": "Place",
+						"addressLocality": "Melbourne",
+						"addressCountry": "Australia"
+					}
+				}
 			}
 		</script>
 		
-		<!-- Blog Post Structured Data (if on a blog post) -->
+		<!-- Article Structured Data (if on a blog post) -->
 		{Astro.props.frontmatter && (
 			<script type="application/ld+json">
 				{
 					"@context": "https://schema.org",
-					"@type": "BlogPosting",
+					"@type": "Article",
 					"headline": Astro.props.frontmatter.title,
 					"description": Astro.props.frontmatter.description,
 					"author": {
 						"@type": "Person",
-						"name": Astro.props.frontmatter.author
+						"name": Astro.props.frontmatter.author || "Alex Leye"
 					},
 					"datePublished": Astro.props.frontmatter.pubDate.toISOString(),
+					"dateModified": Astro.props.frontmatter.updatedDate?.toISOString() || Astro.props.frontmatter.pubDate.toISOString(),
 					"publisher": {
 						"@type": "Person",
 						"name": "Alex Leye"
@@ -80,13 +92,26 @@ const {pageTitle} = Astro.props;
 					"mainEntityOfPage": {
 						"@type": "WebPage",
 						"@id": Astro.url
-					}
+					},
+					"image": "https://www.alexleye.com/bonsai-tree-s.webp"
 				}
 			</script>
 		)}
 
 		<!-- Google Analytics -->
 		<meta name="google-site-verification" content="7D082XiKh1jKRqrv_KcvSzpl-dGugaJrh5jZ9S7UviY" />
+		
+
+		<!-- Google tag (gtag.js) -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-5X87N9WPW6"></script>
+		<script is:inline>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+
+		gtag('config', 'G-5X87N9WPW6');
+		</script>
+
 		
 		<!-- Preload images -->
 		<link rel="preload" as="image" href="/working-s.webp" />
