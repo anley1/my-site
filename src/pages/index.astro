@@ -1,6 +1,5 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Greeting from '../components/Greeting';
 import Social from '../components/Social.astro';
 import { Image } from 'astro:assets';
 const pageTitle = "Alex Leye";
@@ -8,7 +7,7 @@ const pageTitle = "Alex Leye";
 
 <BaseLayout pageTitle={pageTitle}>
 	<h1 class="title">Alex's Site</h1>
-		<Greeting client:load messages={["Hi"]} />
+	<h3>Hi! Thank you for visiting!</h3>
 	<p class="mt-8">
 		My name is Alex and I am a
 		<span class="inline-block relative whitespace-nowrap">
