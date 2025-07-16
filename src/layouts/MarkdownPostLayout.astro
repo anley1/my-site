@@ -1,6 +1,7 @@
 ---
 import BaseLayout from './BaseLayout.astro';
 import { Image } from 'astro:assets';
+import Utterances from '../components/Utterances.astro';
 const { frontmatter } = Astro.props;
 const { minutesRead } = Astro.props.frontmatter;
 ---
@@ -40,5 +41,7 @@ const { minutesRead } = Astro.props.frontmatter;
         <div class="prose prose-sm dark:prose-invert prose-headings:font-bold prose-headings:text-gray-900 dark:prose-headings:text-gray-100 prose-p:text-gray-700 dark:prose-p:text-gray-300 prose-p:leading-normal prose-p:mb-4 max-w-none overflow-hidden">
             <slot />
         </div>
+
+        <Utterances />
     </div>
 </BaseLayout>

@@ -1,5 +1,6 @@
 ---
 ---
+
 <button
     type="button"
     id="themeToggle"
@@ -69,27 +70,49 @@
 
 <!-- Use is:inline on script, or astro:before-preparation to prevent FOUC -->
 <script>
-	document.addEventListener('astro:page-load', () => {
+	function toggleUtterancesTheme() {
+		if (document.querySelector(".utterances-frame")) {
+			const theme =
+				localStorage.getItem("theme") === "light"
+					? "github-light"
+					: "github-dark";
+			const message = {
+				type: "set-theme",
+				theme,
+			};
+			const iframe = document.querySelector(
+				".utterances-frame",
+			) as HTMLIFrameElement;
+			iframe?.contentWindow?.postMessage(message, "https://utteranc.es");
+		}
+	}
+	document.addEventListener("astro:page-load", () => {
 		const handleToggleClick = () => {
 			const element = document.documentElement;
 			element.classList.toggle("dark");
 
 			const isDarkMode = element.classList.contains("dark");
 			localStorage.setItem("theme", isDarkMode ? "dark" : "light");
-		}
-		document.getElementById("themeToggle")?.addEventListener("click", handleToggleClick);
+			toggleUtterancesTheme();
+		};
+		document
+			.getElementById("themeToggle")
+			?.addEventListener("click", handleToggleClick);
 	});
 
-  document.addEventListener('astro:after-swap', () => {
-    // use stored theme if available, otherwise use system preference, default to light
-    const storedTheme = localStorage.getItem('theme');
-    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const theme = storedTheme || (systemPrefersDark ? 'dark' : 'light');
-    
-    if (theme === 'light') {
-      document.documentElement.classList.remove('dark');
-    } else {
-      document.documentElement.classList.add('dark');
-    }
-  });
+	document.addEventListener("astro:after-swap", () => {
+		// use stored theme if available, otherwise use system preference, default to light
+		const storedTheme = localStorage.getItem("theme");
+		const systemPrefersDark = window.matchMedia(
+			"(prefers-color-scheme: dark)",
+		).matches;
+		const theme = storedTheme || (systemPrefersDark ? "dark" : "light");
+
+		if (theme === "light") {
+			document.documentElement.classList.remove("dark");
+		} else {
+			document.documentElement.classList.add("dark");
+		}
+		toggleUtterancesTheme();
+	});
 </script>

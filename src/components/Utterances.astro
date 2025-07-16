@@ -1,0 +1,35 @@
+---
+// No frontmatter needed unless you want to pass props
+---
+
+<div id="utterances-comments"></div>
+<script>
+    // Helper: map your theme to utterances theme
+    function getUtterancesTheme() {
+        const theme = localStorage.getItem("theme") || "light";
+        return theme === "dark" ? "github-dark" : "github-light";
+    }
+
+    function loadUtterances() {
+        const container = document.getElementById("utterances-comments");
+        if (!container) return;
+        // Remove existing utterances frame if present
+        container.innerHTML = "";
+        const script = document.createElement("script");
+        Object.entries({
+            src: "https://utteranc.es/client.js",
+            repo: "anley1/my-site",
+            "issue-term": "pathname",
+            label: "✨💬✨",
+            theme: getUtterancesTheme(),
+            crossorigin: "anonymous",
+            async: "true",
+        }).forEach(([key, value]) => {
+            script.setAttribute(key, value);
+        });
+        container?.appendChild(script);
+    }
+
+    // Initial load
+    loadUtterances();
+</script>
