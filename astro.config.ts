@@ -10,9 +10,8 @@ import tailwind from "@astrojs/tailwind";
 // https://astro.build/config
 export default defineConfig({
   site: 'https://www.alexleye.com',
-  integrations: [mdx(), sitemap(), tailwind()],
-  markdown: {
-    remarkPlugins: [remarkToc, remarkReadingTime],
+  integrations: [mdx({
+    remarkPlugins: [[remarkToc, { heading: "contents", maxDepth: 4 }], remarkReadingTime],
     rehypePlugins: [rehypeAccessibleEmojis],
-  },
+  }), sitemap(), tailwind()],
 });

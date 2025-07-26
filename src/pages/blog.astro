@@ -11,7 +11,11 @@ const pageTitle = "Blog";
 	<h1 class="title">Blog</h1>
 
 	<ul class="mt-8">
-		{allPosts.map((post) => <BlogPost url={`/posts/${post.slug}`} title={post.data.title} pubDate={post.data.pubDate} /> )}
+		{
+			allPosts
+				.sort((a, b) => new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime())
+				.map((post) => <BlogPost url={`/posts/${post.slug}`} title={post.data.title} pubDate={post.data.pubDate} /> )
+		}
 	</ul>
 	<div class="flex mt-auto">
 		<Image 
