@@ -12,11 +12,18 @@ import rehypeUnwrapImages from "rehype-unwrap-images";
 import tailwind from "@astrojs/tailwind";
 
 
+import expressiveCode from "astro-expressive-code";
+
+
 // https://astro.build/config
 export default defineConfig({
   site: 'https://www.alexleye.com',
   integrations: [
-    mdx({
+    expressiveCode(),
+    mdx(), 
+    sitemap(), 
+    tailwind()],
+    markdown: {
       remarkPlugins: [[remarkToc, { heading: "contents", maxDepth: 4 }], remarkReadingTime, remarkMath],
       rehypePlugins: [
         rehypeAccessibleEmojis, 
@@ -30,8 +37,5 @@ export default defineConfig({
           },
         ],
       ],
-    }),
-    sitemap(), 
-    tailwind()
-  ],
+    }
 });

@@ -7,7 +7,7 @@ const { minutesRead } = Astro.props.frontmatter;
 ---
 
 <BaseLayout pageTitle={frontmatter.pageTitle}>
-    <div class="max-w-3xl mx-auto">        
+    <div class="max-w-3xl mx-auto flex flex-col">        
         <!-- Metadata -->
         <div class="flex flex-wrap items-center gap-3 mb-4 text-xs text-gray-600 dark:text-gray-400">
             <span>Published {frontmatter.pubDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
@@ -38,7 +38,7 @@ const { minutesRead } = Astro.props.frontmatter;
         )}
 
         <!-- Content -->
-        <div class="prose prose-sm dark:prose-invert prose-headings:font-bold prose-headings:text-gray-900 dark:prose-headings:text-gray-100 prose-p:text-gray-700 dark:prose-p:text-gray-300 prose-p:leading-normal prose-p:mb-4 max-w-none">
+        <div class="flex flex-col prose prose-sm dark:prose-invert prose-headings:font-bold prose-headings:text-gray-900 dark:prose-headings:text-gray-100 prose-p:text-gray-700 dark:prose-p:text-gray-300 prose-p:leading-normal prose-p:mb-4 max-w-none">
             <slot />
         </div>
 
