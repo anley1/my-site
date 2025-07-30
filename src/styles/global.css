@@ -81,18 +81,33 @@
 
 	/* Mobile prose content fixes */
 	.prose {
-		word-wrap: break-word;
+		word-wrap: normal;
 		overflow-wrap: break-word;
-		hyphens: auto;
+		hyphens: none;
 	}
 
 	.prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
-		word-wrap: break-word;
+		word-wrap: normal;
 		overflow-wrap: break-word;
 	}
 
+	.prose h2 {
+		margin-top: 3.5rem;
+		margin-bottom: 0.75rem;
+	}
+
+	.prose h3 {
+		margin-top: 3rem;
+		margin-bottom: 0.75rem;
+	}
+
+	.prose h4, .prose h5, .prose h6 {
+		margin-top: 2.5rem;
+		margin-bottom: 0.5rem;
+	}
+
 	.prose p, .prose li, .prose blockquote {
-		word-wrap: break-word;
+		word-wrap: normal;
 		overflow-wrap: break-word;
 	}
 
@@ -102,15 +117,15 @@
 		margin-left: 0;
 	}
 
+
 	.prose code {
-		word-break: break-all;
-		white-space: pre-wrap;
+		white-space: pre;
+		overflow-x: auto;
 	}
 
 	.prose pre {
+		white-space: pre;
 		overflow-x: auto;
-		word-break: break-all;
-		white-space: pre-wrap;
 	}
 
 }
@@ -198,4 +213,28 @@
 	.hamburger {
 		display: none;
 	}
+}
+
+.blog-tutorial ul {
+list-style-type: square;
+margin-top: 0.25em;
+margin-bottom: 0.25em;
+padding-left: 1.2em;
+}
+.blog-tutorial li {
+margin-top: 0;
+margin-bottom: 0;
+padding-top: 0;
+padding-bottom: 0;
+}
+.blog-tutorial li::marker {
+color: var(--theme-text);
+}
+
+.h2-tight h2 {
+	margin-top: 0;
+}
+
+#contents {
+	margin-top: 0;
 }

@@ -1,0 +1,1019 @@
+---
+title: "Some Useful Algorithms for Your Back Pocket"
+pubDate: 2025-07-22
+description: "A collection of data structures & algorithms to keep close at hand."
+author: "Alex Leye"
+tags: ["algorithms"]
+---
+
+## Contents
+
+## Introduction
+
+Here are some of my favourite algorithms and data structures. At the very least, they are massively helpful to understand and apply.
+
+## Fundamentals
+
+### Numbers
+
+**int:** 32-bit signed two's complement integer. Range from $$-2^{31}$$ to $$2^{31} - 1$$.  
+**long:** 64-bit two's complement integer. $$-2^{63}$$ to $$2^{63} - 1$$.  
+**double:**  decimal places with precision (double-precision 64-bit IEEE 754 floating point).  
+
+Remember that you can perform arithmetic between the types above, beware of promotion rules and explicit casts.
+
+#### Widening
+
+```java
+int i = 10;
+float f = i;
+double d = f;
+```
+
+#### Explicit cast
+
+```java
+double d = 3.14159;
+int i = (int) d; // loss of precision
+```
+
+#### Quick Conversions
+
+##### Python
+
+Use ord to get the ascii number for a given letter. E.g.
+
+```python
+ord("a")  # => 25
+```
+
+##### Java
+int to char (range 0..9).  
+
+```java
+char c = num + '0'
+```
+
+char to int (range 0..9):  
+
+```java
+int c = num - '0'
+```
+
+
+### Mathematics
+
+#### Greatest Common Divisor (GCD)
+
+- Euclidian Algorithm
+
+The order of `a` and `b` does not matter for this calculation and will always produce the same result.
+
+```java
+private int getGCD(int a, int b) {
+    return b == 0 ? a : getGCD(b, a % b);
+}
+```
+
+Take an example of `a=6`, and `b=9`. We expect to get the GCD of 3.
+
+```
+getGCD(6,9) ->  
+  getGCD(9, 6 % 9 == 6) ->  
+    getGCD(6, 9 % 6 == 3) ->  
+      getGCD(3, 6 % 3 == 0) ->  
+        return 3  
+```
+
+#### Binary Exponentiation
+
+This is an $$O(\log N)$$ technique to determine an exponent e.g. $$x^{n}$$. It is based on the observation that, for a given n, there is $$\lfloor\log_2 n\rfloor + 1$$ digits in base 2. So we can perform $$O(\log N)$$ multiplications if we know the powers of:  
+
+```math
+x^{1}, x^{2}, x^{4}, x^{8}, \ldots
+```
+
+
+Take the following example of $$3^{13}$$. We can write 13 in binary as 1101. The positions where the 1's are present are: $$(2^3)=8$$, $$(2^2)=4$$, $$(2^0)=1$$. So we can calculate:
+
+$$3^{13} = 3^8 \times 3^4 \times 3^1$$
+
+More generally we follow this halving formula:
+
+```math
+x^n = \begin{cases}
+1 & \text{if } n = 0 \\
+(x^{n/2})^2 & \text{if } n > 0 \text{ and } n \text{ even} \\
+x \cdot (x^{(n-1)/2})^2 & \text{if } n > 0 \text{ and } n \text{ odd}
+\end{cases}
+```  
+
+Care needs to be taken to be dealing with `long` type for n, since we can have overflow with Integer.MAX_VALUE or Integer.MIN_VALUE being used.
+
+Recursive
+
+```java
+public double myPow(double x, int n) {
+    return n < 0 ? 1.0 / binaryExp(x, -1 * (long) n) : binaryExp(x, (long) n);
+}
+
+private int binpow(long x, long n) {
+  // calculate x^n
+
+  if (n == 0) return 1;
+
+  if (n % 2 == 1) {
+    // n is odd
+    return x * binpow(x*x, (n - 1) / 2);
+  } else {
+    // n is even
+    return binpow(x*x, n / 2);
+  }
+}
+```
+
+The binpow logic can be simplified to reuse the next binpow call for a pair of odd and even numbers. Consider the case that we use n/2 if n is even, otherwise using (n-1)/2 if it is odd. The paired odd number therefore still uses binpow of n/2. Hence we can reduce to the single call:
+
+```java
+private double binaryExp(double x, long n) {
+    if (n == 0) return 1;
+
+    double res = binaryExp(x*x, n / 2);
+    return n % 2 == 1 ? res * x : res;
+}
+```
+
+## Data Structures
+
+### Arrays
+
+Hash table (map)  
+TreeMap  
+Sets  
+Autoboxing and primitives  
+
+### Sets
+
+Ordered sets  
+TreeSet (Red - Black Tree)   
+
+### Strings
+
+#### Rabin-Karp (Hashing)  
+
+This is a technique to compare strings in O(1) time, given that we have their numeric hashes. Additionally, by using a polynomial rolling hash, we can compute the numeric hash of a string with the removal of the leftmost character and addition of a new rightmost character in O(1) time as well. This allows us to find the presence of a string a in another string b, 1 or more times, in O(n) time.
+
+The key is to use the rolling hash. As mentioned one such hash is the polynomial hash function with a large modulus. Let's start with the polynomial function:
+
+P(x) = a_n*x^n + a_(n-1)*x^(n-1) + ... + a_2*x^2 + a_1*x + a_0
+
+For a string hash we evaluate:  
+
+hash = c₀*base^(n-1) + c₁*base^(n-2) + ... + c_(n-1)*base^0
+
+Which we can efficiently compute in O(n) time (instead of O(n^2)) using Horner's method of factoring polynomials. In code that looks like:
+
+```
+hash = 0
+for each character c:
+    hash = hash * base + c
+```
+
+For example:  
+
+```
+For string "abc" (length 3):
+hash = a*base^2 + b*base^1 + c*base^0
+```
+
+Now for a chosing the base, we would use something like 256 for all ascii characters as the base space. We want to also store `pow`, which is in this case `base^2` or more generally `base^(n-1)`, because it provides the contribution of the leftmost character to the numeric hash result. We use MOD with a large prime number, so that our hash does not overflow. 
+
+Optimal values in practice are:  
+- **BASE (int):** 256
+- **MOD (long):** 10^9 + 7 => 1_000_000_007L
+
+
+Let's go through an example of Rabin-Karp to search for a duplicate string within string s, of size len:  
+
+```java
+    private String search(String s, int len) {
+        if (len == 0) return "";
+        
+        long hash = 0;
+        long pow = 1;
+        
+        // Calculate initial hash and power
+        for (int i = 0; i < len; i++) {
+            hash = (hash * BASE + s.charAt(i)) % MOD;
+            if (i < len - 1) pow = (pow * BASE) % MOD;
+        }
+        
+        Set<Long> seen = new HashSet<>();
+        seen.add(hash);
+        
+        // Rolling hash
+        for (int i = len; i < s.length(); i++) {
+            // Remove leftmost character and add rightmost
+            hash = (hash - (s.charAt(i - len) * pow) % MOD + MOD) % MOD;
+            hash = (hash * BASE + s.charAt(i)) % MOD;
+            
+            if (seen.contains(hash)) {
+                return s.substring(i - len + 1, i + 1);
+            }
+            seen.add(hash);
+        }
+        
+        return null;
+    }
+```
+
+Let's go through the initial hashing:  
+
+
+```java
+  // Calculate initial hash and power
+  long hash = 0;
+  long pow = 1;
+  for (int i = 0; i < len; i++) {
+    hash = (hash * BASE + s.charAt(i)) % MOD;
+    if (i < len - 1) pow = (pow * BASE) % MOD;
+  }
+```
+
+This is the classic algorithm to get the hash of the string from 0..len. Here, pow is computed efficiently to find the contribution of the leftmost character by the end of the loop.
+
+Now let's go through the rolling hash function:  
+
+```java
+  Set<Long> seen = new HashSet<>();
+  seen.add(hash); // initial hash
+
+  // Rolling hash
+  for (int i = len; i < s.length(); i++) {
+    // Remove leftmost character then add rightmost character
+    hash = (hash - ((s.charAt(i - len) * pow) % MOD) + MOD) % MOD;
+    hash = (hash * BASE + s.charAt(i)) % MOD;
+
+    if (seen.contains(hash)) {
+      return s.substring(i - len + 1, i + 1);
+    }
+    seen.add(hash);
+  }
+
+  return null;
+```
+
+The MOD operations can get confusing, but they are there to prevent overflow. Importantly, for systems with a negative number representation (e.g. 2's complement), we have the `+ MOD` within the removal of the leftmost character, to ensure we don't get a negative result which would be overflow. Now let's see this algorithm applied to a real problem.
+
+- Longest Duplicate Substring (hard)  
+
+In the longest duplicate (or repeating) substring problem, we are given a String s and need to solve the question efficiently. An optimal way to do this is to perform binary search on the length of the substring in question, and then Rabin-Karp on those lengths. The key idea is that if there is a duplicate substring of length k, there is definitely a duplicate substring of length k-1, k-2, and so on. However, if there is not a duplicate string of length k, then there is definitely not a duplicate substring of length k+1, k+2, etc. Hence we can use binary search.
+
+```java
+    private static final int BASE = 256;
+    private static final long MOD = 1000000007L;
+    
+    public String longestDupSubstring(String s) {
+        int n = s.length();
+        int left = 1, right = n;
+        String result = "";
+        
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            String dup = search(s, mid);
+            if (dup != null) {
+                result = dup;
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+        
+        return result;
+    }
+```
+
+The search is from `left=1` and `right=N`, since we are dealing with substring lengths (hence we don't need to check substring length 0, and we also need to include the full N string length).
+
+##### Critical Note: Hash Collisions
+For correctness we also need to ensure that there wasn't a hash collision. We can do this by storing the substring that produced the hash, or alternatively the index of the start of that substring (since we know the length). Then, when you get a matched hash, go through and check that this actually matches. So, the final Rabin-Karp implementation for the longest duplicate substring (without optimising for string comparison in the collision cases) is:
+
+```java
+class Solution {
+    private static final int BASE = 256;
+    private static final long MOD = 1_000_000_007L;
+
+    public String longestDupSubstring(String s) {
+        String result = "";
+
+        // Binary search on substring lengths
+        int left = 1;
+        int right = s.length();
+
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            String found = search(s, mid);
+            if (found != null) {
+                result = found;
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+
+        return result;
+    }
+
+    private String search(String s, int len) {
+        if (len == 0) return "";
+        
+        int n = s.length();
+
+        // Initial hash for first substring
+        long hash = 0;
+        long pow = 1;
+
+        for (int i = 0; i < len; i++) {
+            hash = (hash * BASE + s.charAt(i)) % MOD;
+            if (i < len - 1) pow = (pow * BASE) % MOD;
+        }
+
+        // Map to store hash -> list of substrings with that hash
+        Map<Long, List<String>> hashToSubstrings = new HashMap<>();
+        String firstSubstring = s.substring(0, len);
+        hashToSubstrings.put(hash, new ArrayList<>());
+        hashToSubstrings.get(hash).add(firstSubstring);
+
+        // Rolling hash for remaining substrings
+        for (int i = len; i < n; i++) {
+            // Remove leftmost character and add rightmost character
+            hash = (hash - s.charAt(i - len) * pow % MOD + MOD) % MOD;
+            hash = (hash * BASE + s.charAt(i)) % MOD;
+
+            String currentSubstring = s.substring(i - len + 1, i + 1);
+
+            // Check if this hash has been seen before
+            if (hashToSubstrings.containsKey(hash)) {
+                // Check for actual string matches (collision detection)
+                for (String prevSubstring : hashToSubstrings.get(hash)) {
+                    if (currentSubstring.equals(prevSubstring)) {
+                        return currentSubstring; // Found a duplicate
+                    }
+                }
+                // Hash collision but no actual match - add to list
+                hashToSubstrings.get(hash).add(currentSubstring);
+            } else {
+                // New hash - create new list
+                hashToSubstrings.put(hash, new ArrayList<>());
+                hashToSubstrings.get(hash).add(currentSubstring);
+            }
+        }
+
+        return null; // No duplicates found
+    }
+}
+```
+
+Knuth-Morris-Pratt (KMP)  
+Tries  
+
+String fundamentals:
+
+- 'String' is not a primitive type, so comparison using '==' will compare the **Object reference** rather than the contents of the strings. You must use the equals() method on strings. E.g. string1.equals(string2).
+
+## Algorithms
+
+### Graph Algorithms
+
+- Dijkstra's algorithm  
+
+Dijkstra's is a greedy algorithm to find the shortest path from a source node to all other nodes in a Directed Acyclic Graph (DAG). Here is an implementation, assuming that the adjacency list has already been populated.
+
+```java
+int[] dijkstra(int start) {
+    int[] distances = new int[vertices];
+    Arrays.fill(distances, Integer.MAX_VALUE);
+    distances[start] = 0;
+
+    PriorityQueue<int[]> pq = new PriorityQueue<>((a,b) -> Integer.compare(a[1], b[1]));
+    pq.offer(new int[]{start, 0});
+
+    while (!pq.isEmpty()) {
+        int[] current = pq.poll();
+        int u = current[0];
+        int distU = current[1];
+
+        if (distU > distances[u]) continue; // Skip stale entry
+
+        for (Edge edge : adjacencyList.get(u)) {
+            int v = edge.target;
+            int weight = edge.weight;
+            if (distances[u] + weight < distances[v]) {
+                distances[v] = distances[u] + weight;
+                pq.offer(new int[]{v, distances[v]});
+            }
+        }
+    }
+
+    return distances;
+}
+```
+
+
+Prim's algorithm (MST)  
+Kruskal's algorithm (MST via DSU)  
+
+
+Edmonds-Karp (Ford Fulkerson) - maximum cut/flow  
+Topological Sort (Khan's Algorithm, BFS)  
+
+### Search & Traversal
+
+Depth First Search (DFS)  
+Breadth First Search (BFS)  
+
+Breadth First Search guarentees the shortest path traversal in an **unweighted** graph. This is because without the edge weights, the hops are equal, so you can find the shortest path in terms of the number of edges.  
+
+Because BFS processes nodes in increasing order of their distance from the source, the first time a node is visited, it is via the shortest path from the source.  
+
+For weighted graphs, BFS for this use case will not work and you will need another algorithm like Dijkstra's.  
+
+
+BFS use cases:  
+
+- Bus stops (hard)
+
+
+
+## Techniques
+
+### Ordering
+
+- Boyer-Moore voting algorithm (majority element)  
+
+This is an $$O(N)$$ time algorithm to determine the majority element in a list of size N. Here the majority element is one that will appear more than $$N / 2$$ times.  
+
+```java
+public int majorityElement(int[] nums) {
+    int count = 0;
+    Integer candidate = null;
+
+    for (int num : nums) {
+        if (count == 0) {
+            candidate = num;
+        }
+        count += (num == candidate) ? 1 : -1;
+    }
+
+    return candidate;
+}
+```
+Essentially, the candidate will keep swapping, but by the end of the pass we are guarenteed to end up with the majority element, if it exists. If the majority element may not exist, you need to do one final $$O(N)$$ pass with the final candidate, to ensure that it does appear more than $$N/2$$ times (otherwise there was never a majority element to start with).
+
+#### Twist: Majority elements (plural)
+
+What if we wanted to find the elements that appeared more than $$N / 3$$ times in the list? We can prove that there can only exist two elements that can appear more than $$N/3$$ times. Then, can we apply Boyer-Moore's voting algorithm?
+
+Here is an implementation where we track the two possible candidates. Note the order of operations is important. We check if one is counted or the other. Since the candidates are initialised as null at the start, then this particular algorithm will ensure we don't have $$candidate1 == candidate2$$ because candidate1's count will get incremented and not candidate2.
+
+```java
+public List < Integer > majorityElement(int[] nums) {
+
+    // 1st pass
+    int count1 = 0;
+    int count2 = 0;
+
+    Integer candidate1 = null;
+    Integer candidate2 = null;
+
+    for (int n: nums) {
+        if (candidate1 != null && candidate1 == n) {
+            count1++;
+        } else if (candidate2 != null && candidate2 == n) {
+            count2++;
+        } else if (count1 == 0) {
+            candidate1 = n;
+            count1++;
+        } else if (count2 == 0) {
+            candidate2 = n;
+            count2++;
+        } else {
+            count1--;
+            count2--;
+        }
+    }
+
+    // 2nd pass
+    List result = new ArrayList <> ();
+
+    count1 = 0;
+    count2 = 0;
+
+    for (int n: nums) {
+        if (candidate1 != null && n == candidate1) count1++;
+        if (candidate2 != null && n == candidate2) count2++;
+    }
+
+    int n = nums.length;
+    if (count1 > n/3) result.add(candidate1);
+    if (count2 > n/3) result.add(candidate2);
+
+    return result;
+}
+```
+
+In this version, the second pass is included to show how we can confirm that the candidates do indeed occur more than $$n/3$$ times.  See [here](https://leetcode.com/problems/majority-element-ii/editorial/comments/2085757/) for a nice introduction to the proof. To quote the author, Tiago Napoli:
+
+> Say we have 2 containers and a trash, and we follow the approach in the algorithm:
+> 
+> Every time a new element comes:
+>     We check if it's already in a container, and if so we add to that container.
+>     Otherwise, if there's an empty container, we add to that empty container.
+>     Otherwise, we get one element from each container and put them in the trash (totalizing 3 elements going to trash).
+> 
+> Now, with the process finished and we have A and B in the containers and say we get an element X from the trash, X != A and X != B, and say it appeared M times. Let's see what are the valid range of values for M. We know that every time an element X goes to trash, it will take 2 more elements with it, so we have:
+> $$M \cdot 3 \leq N \implies M \leq N/3$$
+> 
+> This means that, if an element ended up in trash and it's not in the final containers, it must have appeared $$\leq N/3$$ times. From this we can infer that if there's an element Y which appeared $$> N/3$$, it must be in the containers. However, this is not sufficient to ensure that it appears more than $$N/3$$ times, so we need to do the second pass to check the elements in the container.
+
+### Bitwise Operations
+
+XOR  
+`>>` and `<<`\  
+`|` and `&`  
+
+### Backtracking
+
+N-queens  
+Sudoku solver  
+Subsets  
+Permutations  
+Combinations  
+
+### Heaps
+
+Min-heaps (priority queue)  
+
+Note that for the `PriorityQueue` we can also instantiate with a Comparator directly, or with this `(a,b)` lambda; both are equivalent.
+
+```java
+// Equivalent min heaps
+PriorityQueue<int[]> pq = new PriorityQueue<>((a,b) -> Integer.compare(a[1], b[1]));
+PriorityQueue<int[]> pq = new PriorityQueue<>(Comparator.comparingInt(a -> a[1]));
+```
+
+Max-heaps  
+Two heap problems  
+K-way merge  
+Kth element (Top K)  
+Deqeues  
+
+### Disjoint Set Union
+
+Accounts merge  
+
+### Binary Search
+
+Incl. modified binary Search
+
+- first bad revision  
+- sqrt of a number x (floor(res) `lies between 0 <= res <= x/2`  )  
+
+### Matrix Traversal
+
+Connected islands  
+
+
+#### Diagonals  
+
+Diagonals are at:  
+**Top-left to bottom-right:** row - col (unique for each row - col)  
+**Top-right to bottom-left:** row + col (unique for each row + col)  
+
+For example, in N-Queens, this is useful to know if we have another queen in the main diagonal (top-left to bottom-right) or the anti-diagonal (top-right to bottom-left).
+
+#### Boxes  
+
+Some problems will inevitably require indexing into sub-boxes within a matrix. A classic example is the Sudoku solver problem, where for a given `i,j` combination we want to find the 'box' that it lies within, out of the 3x3 boxes on the grid. We can use the generic flattening formula to flatten indexes of a 2D matrix into a 1D indexing array:
+
+```
+index = row * num_cols + col
+```
+
+This gives all `rows * cols` indexes. For the boxes scenario, we can start with the idea of having a 2D matrix of the 3x3 boxes, using the mapped indexes:  
+
+```
+box_i = i // 3  
+box_j = j // 3  
+```
+
+Then we would end up with:
+
+```
+(0,0) (0,1) (0,2)
+(1,0) (1,1) (1,2)
+(2,0) (2,1) (2,2)
+```
+
+This is sufficient, but if we want to then again simplify into a 1D index array of the boxes from 0 to 8, we can apply the flattening formula mentioned above. Overall, we end up with:
+
+```java
+private int getBox(int i, int j) {
+  return (i / 3) * 3 + (j / 3)
+}
+```
+
+This gives us a box index in the range 0 to 8, or visualised:
+
+```
+0 1 2
+3 4 5
+6 7 8
+```  
+
+As an optimisation note, we can perform a boolean check if a number exists in a column, row, or box already using the following math:
+
+
+```java
+private boolean canPlaceNumber(int i, int j, int num) {
+  int boxIdx = getBox(i, j);
+
+  return row_set[i][num] + col_set[j][num] + box_set[boxIdx][num] == 0;
+}
+```  
+
+In other words, we can check they are all 0 before we place the number.
+
+
+### Stacks
+
+Monotonic stack  
+
+Examples:  
+
+- 132 pattern (medium)  
+- Largest rectangle in a histogram (hard)  
+
+
+### Linked Lists
+
+Reverse a linked list  
+LRU Cache  
+
+#### Fast & slow pointers
+
+Part of linked lists, but a specific technique to significantly aid in cycle detection questions. Also known as 'the tortoise and the hare problem'.
+
+##### Cycle detection
+
+```java
+  public boolean hasCycle(ListNode head) {
+    
+    if (head == null) return false;
+    ListNode slow = head;
+    ListNode fast = head.next;
+
+    while (fast != null && fast.next != null) {
+      slow = slow.next;
+      fast = fast.next.next;
+      if (slow == fast) return true;
+    }
+    
+    return false;
+  }
+```
+
+##### Cycle length
+
+Based on the cycle detection algorithm:
+
+We can find length $$C$$ as:
+
+```java
+  public int findCycleLength(ListNode head) {
+    ListNode slow = head;
+    ListNode fast = head;
+    while (fast != null && fast.next != null) {
+      fast = fast.next.next;
+      slow = slow.next;
+      if (slow == fast) // Found the cycle
+        return calculateLength(slow); // Calculate the cycle length
+    }
+    return 0;
+  }
+
+  private static int calculateLength(ListNode slow) {
+    ListNode current = slow;
+    int cycleLength = 0;
+    do {
+      current = current.next;
+      cycleLength++;
+    } while (current != slow);
+    return cycleLength;
+  }
+```
+
+Complexity:  
+- Time: O(N)  
+- Space: O(1) for the pointers  
+
+
+##### Cycle start point  
+
+To find the start of linked list cycle (the node where the cycle begins), we can build on the above approach to find the length of the cycle, denoted as $$C$$. Once we have $$C$$, then we need to set a pointer1 and pointer2 to point to the head of the original linked list. Then, follow the steps:
+
+1. Move pointer2 ahead by $$C$$ nodes.  
+2. Now, keep incrementing pointer1 and pointer2 until they both meet - increment them by 1 step each.  
+3. As pointer2 is $$C$$ nodes ahead of pointer1, which means, pointer2 must have completed one loop in the cycle when both pointers meet. Their meeting point will be the start of the cycle.  
+
+For a more mathematical proof:  
+
+Let's define some variables:
+- Let $$L$$ be the length of the non-cyclic part (from head to cycle start)  
+- Let $$C$$ be the length of the cycle  
+- Let $$M$$ be the distance from the cycle start to where the fast and slow pointers first meet  
+
+
+**Finding the meeting point**  
+To find the meeting point; when the fast and slow pointers first meet, the slow pointer has traveled $$L + M$$ steps, while the fast pointer has traveled $$L + M + k*C$$ steps (where $$k$$ is some number of complete cycles).  
+Since the fast pointer moves at twice the speed of the slow pointer:  
+
+```math
+2(L + M) = L + M + k*C
+2L + 2M = L + M + k*C
+L + M = k*C
+L = k*C - M
+```
+
+Meaning, or some integer k, the length from the head to the start of the cycle is:  
+
+```math
+L = k*C - M
+```
+
+**Obtain the starting point**  
+
+Now we reset both pointers to the head and move pointer2 ahead by $$C$$ nodes:
+- Pointer1 starts at position $$0$$  
+- Pointer2 starts at position $$C$$  
+When they meet after $$x$$ steps:
+- Pointer1 will be at position $$x$$  
+- Pointer2 will be at position $$C + x$$  
+For them to meet, pointer2 must have completed some number of cycles:
+
+```math
+C + x = x + m*C  (where m is some integer)
+C = m*C
+```
+
+Implying that `m=1` for this math to work out. That means pointer2 has completed exactly 1 cycle. The code would be:  
+
+```java
+private static ListNode findStart(ListNode head, int cycleLength) {
+  // Reset to the start of the list
+  ListNode pointer1 = head, pointer2 = head;
+
+  // Move pointer2 ahead 'cycleLength' nodes
+  while (cycleLength > 0) {
+    pointer2 = pointer2.next;
+    cycleLength--;
+  }
+
+  // Increment both pointers until they meet at the start of the cycle
+  while (pointer1 != pointer2) {
+    pointer1 = pointer1.next;
+    pointer2 = pointer2.next;
+  }
+
+  return pointer1; // same as pointer2
+}
+```
+
+##### Middle of linked list
+
+Note that in this technique, if the list is even length it will return the second middle node. If you need to deal with the first and second middle element, you can adjust the function to track a node one-prior to the slow pointer.
+
+```java
+  public ListNode findMiddle(ListNode head) {
+    if (head == null || head.next == null) return head;
+    ListNode slow = head;
+    ListNode fast = head;
+
+    while (fast != null && fast.next != null) {
+      slow = slow.next;
+      fast = fast.next.next;
+    }
+    return slow;
+  }
+```
+
+
+### Sorting
+
+Merge sort  
+Counting sort  
+Cyclic sort (req)  
+
+### Two Pointers
+
+2Sum  
+3Sum  
+Squaring a sorted array  
+Dutch national flag  
+Flood fill  
+
+### Sliding window
+
+Best time to buy and sell a stock  
+Maximum window (hard)  
+
+### Dynamic Programming
+
+#### 0/1 knapsack
+
+1D version  
+
+- We must iterate backwards through the capacity, otherwise we can double-count from the
+  previous updates in the DP table for a single pass. This is the downside of using a 1D
+  table.
+
+```java
+  public int solveKnapsack(int[] profits, int[] weights, int capacity) {
+    int[] dp = new int[capacity + 1];
+    int n = weights.length; // == profits.length
+
+    // pick items once
+    for (int i = 0; i < n; i++) {
+      for (int w = capacity; w >= weights[i]; w--) {
+        dp[w] = Math.max(dp[w], profits[i] + dp[w - weights[i]]);
+      }
+    }
+
+    return dp[capacity];
+  }
+```
+
+2D version
+
+```java
+    public int solveKnapsack(int[] profits, int[] weights, int capacity) {
+        int n = weights.length;
+        int[][] dp = new int[n + 1][capacity + 1];
+
+        for (int i = 1; i < n + 1; i++) {
+            for (int w = 0; w < capacity + 1; w++) {
+                if (weights[i-1] <= w) {
+                    dp[i][w] = Math.max(dp[i-1][w], profits[i-1] + dp[i-1][w - weights[i-1]]);
+                } else {
+                    dp[i][w] = dp[i-1][w];
+                }
+            }
+        }
+
+        return dp[n][capacity];
+    }
+```
+
+#### Unbounded knapsack
+
+When we can pick an item an unlimited amount of times, then the strategy is different. A classic example is the coin change problem.
+
+
+
+2D dynamic programming
+
+Longest common subsequence
+
+### Trees
+
+DFS  
+BFS  
+Binary Trees  
+Binary Search Trees (BSTs)  
+
+#### Tip 1: BST Ordering
+
+For a BST, always remember you can have the following
+
+```
+    4
+  /
+2
+ \
+  3
+```
+
+In other words, only in-order traversal can give you the sorted output in asc order. Otherwise, you can perform binary search directly downwards in the tree starting from the root and either going left or right (i.e. the whole definition of 'binary search' tree).
+
+#### Tip 2: Binary Tree Indexing
+
+If we want to count the index of a node in a binary tree, then consider a complete binary tree to start with - that is, there are no `null` nodes. Then, we can see the following pattern:
+
+```
+               1
+           /       \
+         2           3
+       /   \       /   \
+     4       5   6       7
+    / \     / \ / \     / \
+   8   9  10 11 12 13  14 15
+```
+
+### Compression  
+
+The two general types of compression are **lossless** and **lossy**, which retains all original data or permanently removes some selected data, respectively.
+
+Lossy compression is usually based on some human perception characteristics, such as loud sounds masking quieter sounds for acoustics/music, or higher frequency colour mapping being less perceptible in images.  
+
+Lossless compression must meet the requirement that all data can be reconstructed in decompression. Let's look at the LZW technique and use a string data as an example.  
+
+#### Lempel-Ziv-Welch (LZW) Compression  
+
+In the compression pass, we are mapping from string -> int. Hence, our dictionary stores string(char): int representations. We initialise the dict to contain the ASCII characters from 0-256 using chr(i) to get the char representation in python.  
+
+```python
+def lzw_compress(uncompressed: str) -> list:
+    # Initialize dictionary with single-character strings
+    dict_size = 256
+    dictionary = {chr(i): i for i in range(dict_size)}
+    
+    w = ""
+    result = []
+
+    for c in uncompressed:
+        wc = w + c
+        if wc in dictionary:
+            w = wc
+        else:
+            result.append(dictionary[w])
+            # Add wc to the dictionary
+            dictionary[wc] = dict_size
+            dict_size += 1
+            w = c
+
+    # Output the code for w
+    if w:
+        result.append(dictionary[w])
+
+    return result
+
+```
+
+Decompression steps:  
+
+```python
+def lzw_decompress(compressed: list) -> str:
+    dict_size = 256
+    dictionary = {i: chr(i) for i in range(dict_size)}
+    
+    w = chr(compressed.pop(0))
+    result = [w]
+
+    for k in compressed:
+        if k in dictionary:
+            entry = dictionary[k]
+        elif k == dict_size:
+            entry = w + w[0]
+        else:
+            raise ValueError(f"Bad compressed k: {k}")
+        
+        result.append(entry)
+        dictionary[dict_size] = w + entry[0]
+        dict_size += 1
+        w = entry
+
+    return ''.join(result)
+
+```
+
+## Reactive patterns  
+
+Here is a list of useful functional reactive concepts for streaming-related logic. 
+
+### Observables
+
+Lazy, asychronous data streams. An time interval `tick$` with a mapping to game actions, all passed through a state reducer `reduce` function, is a nice pattern for reactive game development.  
+
+
+```js
+const { of, from, timer, interval, throwError } = require('rxjs');
+const { map, filter, take, mergeMap, switchMap } = require('rxjs/operators');
+
+
+interval(1000) // emits increasing numbers every 1000ms
+  .pipe(
+    take(5), // limit to first 5 emissions
+    map(x => `Tick #${x + 1}`)
+  )
+  .subscribe((x) => console.log(x));
+```
+
+This will print, in 1s intervals:  
+
+```
+Tick #1
+Tick #2
+Tick #3
+Tick #4
+Tick #5
+```
