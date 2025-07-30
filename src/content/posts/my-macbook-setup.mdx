@@ -68,6 +68,7 @@ Each of these settings can be found under the Apple System settings. For each of
       - Show Library folder (**tick**)
 </div>
 
+
 Or for Finder if you prefer setting flags in the terminal:
 ```bash
 # show Library folder
@@ -108,6 +109,7 @@ If you're still not convinced, then note that Ghostty gets around 500 FPS on thi
 
 Also, the Ghostty is the personal project of Mitchell Hashimoto, who is a very cool guy - go check him out: https://mitchellh.com.
 
+
 ### Sudoless access
 Since this is your personal machine we don't want to get prompted for a password for sudo-required operations. Add the following by typing `sudo visudo`. Note - this is the safe command, do not edit the sudo file directly or you can lock yourself out of your system. For the following, ensure that you add the line **after** the line that says `includedir..`.
 
@@ -130,6 +132,7 @@ aleye@Alexs-MacBook-Pro ~ % echo $0
 I am not currently using the _Oh My Zsh!_ framework because I haven't needed some of those features, and wanted to do some custom styling for the shell. This is definitely subjective, but I like the clean look of the original Ghostty shell rather than the fonts and styling of Oh My Zsh out of the box.
 
 
+
 ### Package Manager  
 
 In Linux, say Ubuntu, you have the `apt` package manager. This allows you to install software from your CLI, which works across your system. MacOS does not come with a package manager by default, so we will install [Homebrew](https://brew.sh/) to fix that. Either head to the website to find the installation instructions, or you can use the following:  
@@ -146,6 +149,7 @@ Running the below commands makes sure brew is up to date. Furthermore, running t
 ```shell
 brew update && brew upgrade
 ```
+
 
 #### Install GUI apps
 
@@ -253,7 +257,6 @@ brew install diff-so-fancy
 
 
 Then set the following in your ~/.gitconfig.
-
 ```bash
 [user]
     email = <your email>
@@ -314,6 +317,7 @@ git mr origin 123
 
 This will fetch merge request `123` from `origin` and put it into a new branch called `mr-origin-123` in your local environment. This allows for checking out the code easily.
 
+
 ### .gitignore_global
 
 For now, exclude `.DS_Store` from .. everywhere. So let's do that:  
@@ -340,23 +344,23 @@ To bridge this gap, there are a few good options for the docker engine component
 
 Here's a summary table of some features:
 
-
-| Feature               | Docker Desktop | Colima      | Podman      | Rancher Desktop |
-|-----------------------|:-------------:|:-----------:|:-----------:|:---------------:|
-| Open Source           | ❌            | ✅          | ✅          | ✅              |
-| macOS Support         | ✅            | ✅          | ✅          | ✅              |
-| GUI                   | ✅            | ❌          | ❌          | ✅              |
-| VM Support            | ✅            | ✅          | ✅*         | ✅              |
-| Docker Compose        | ✅            | ✅          | ✅**        | ✅              |
-| Resource Control      | ✅            | ✅          | ✅          | ✅              |
-| Kubernetes            | ✅            | (via k3s)   | (via k3s)   | ✅              |
-| Apple Silicon         | ✅            | ✅          | ✅          | ✅              |
-| Rootless Mode         | ❌            | ✅          | ✅          | ✅              |
-| Notes                 | Most popular, easy setup | Lightweight, fast | CLI-focused, advanced | All rounder |
+| Feature               | Docker Desktop | Colima      | Podman     
+|-----------------------|:-------------:|:-----------:|:-----------:
+| Open Source           | ❌            | ✅          | ✅          |
+| macOS Support         | ✅            | ✅          | ✅          |
+| GUI                   | ✅            | ❌          | ❌          |
+| VM Support            | ✅            | ✅          | ✅*         |
+| Docker Compose        | ✅            | ✅          | ✅**        |
+| Resource Control      | ✅            | ✅          | ✅          |
+| Kubernetes            | ✅            | (via k3s)   | (via k3s)   |
+| Apple Silicon         | ✅            | ✅          | ✅          |
+| Rootless Mode         | ❌            | ✅          | ✅          |
+| Notes                 | Most popular, easy setup | Lightweight, fast | CLI-focused, advanced |
 
 **Legend:**  
 - ✅* Podman uses a VM on macOS for Linux containers.  
 - ✅** Podman supports Compose v2 via podman-compose (not 100% feature parity with Docker Compose).  
+
 
 #### Recommendations
 For personal use, I recommend using `Docker Desktop` due to its ease of setup and no-fuss operation. Usually Docker Desktop will open on start up and be available in the background for any docker commands on the cli. It also installs all the necessary scripts, so you can run `docker` commands after.  
@@ -392,6 +396,7 @@ The last line there is a required symlink, but brew will tell you what to do. On
 aleye@🍣 ~ % javac --version
 javac 17.0.14
 ```
+
 
 #### Maven
 

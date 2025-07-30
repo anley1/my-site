@@ -89,9 +89,7 @@
 
 	/* Mobile prose content fixes */
 	.prose {
-		word-wrap: break-word;
 		overflow-wrap: break-word;
-		hyphens: auto;
 	}
 
 	.prose h2 {
@@ -106,23 +104,6 @@
 		padding-top: 0.75rem;
 	}
 
-	.prose h1,
-	.prose h2,
-	.prose h3,
-	.prose h4,
-	.prose h5,
-	.prose h6 {
-		word-wrap: break-word;
-		overflow-wrap: break-word;
-	}
-
-	.prose p,
-	.prose li,
-	.prose blockquote {
-		word-wrap: break-word;
-		overflow-wrap: break-word;
-	}
-
 	.prose ol {
 		list-style-type: decimal;
 		padding-left: 2rem;
@@ -130,7 +111,6 @@
 	}
 
 	.prose code {
-		word-break: break-word;
 		white-space: pre-wrap;
 	}
 
