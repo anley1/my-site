@@ -83,11 +83,27 @@
 		margin-bottom: 1em;
 	}
 
+	#contents, #git, #t-start {
+		padding-top: 0rem;
+	}
+
 	/* Mobile prose content fixes */
 	.prose {
 		word-wrap: break-word;
 		overflow-wrap: break-word;
 		hyphens: auto;
+	}
+
+	.prose h2 {
+		padding-top: 2rem;
+	}
+
+	.prose h3 {
+		padding-top: 1rem;
+	}
+
+	.prose h4, .prose h5 {
+		padding-top: 0.75rem;
 	}
 
 	.prose h1,
@@ -114,7 +130,7 @@
 	}
 
 	.prose code {
-		word-break: normal;
+		word-break: break-word;
 		white-space: pre-wrap;
 	}
 
@@ -227,12 +243,4 @@
 
 .blog-tutorial li::marker {
 	color: var(--theme-text);
-}
-
-.h2-tight h2 {
-	margin-top: 0;
-}
-
-#contents {
-	margin-top: 0;
 }

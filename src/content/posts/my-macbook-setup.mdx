@@ -26,8 +26,8 @@ Each of these settings can be found under the Apple System settings. For each of
 
 <div class="blog-tutorial">
 **Dock**
-  1. Show recent applications in Dock (OFF)
-  2. Battery (Show percentage)
+  1. Show recent applications in Dock (**OFF**)
+  2. Battery (**Show percentage**)
 
 **Spotlight**
   - Tick the following:
@@ -43,29 +43,29 @@ Each of these settings can be found under the Apple System settings. For each of
     - System Settings
 
 **Keyboard**
-  - Key repeat rate: Fast (max)
-  - Delay until repeat: Short (max)
+  - Key repeat rate: Fast (**max**)
+  - Delay until repeat: Short (**max**)
 
 **Trackpad**
-  - Delay until repeat: Short (max)
+  - Delay until repeat: Short (**max**)
 
 **Trackpad Gestures**
-  - Tap to click (tick)
+  - Tap to click (**tick**)
   - More Gestures
-    - Swipe between pages (OFF)
-    - Swipe between full-screen applications (Swipe Left or Right with Three Fingers)
-    - Mission Control (Swipe up with Three Fingers)
+    - Swipe between pages (**OFF**)
+    - Swipe between full-screen applications (**Swipe Left or Right with Three Fingers**)
+    - Mission Control (**Swipe up with Three Fingers**)
 
 **Notes**
   - Edit > Spelling and Grammar
-  - Correct Spelling Automatically (untick)
+  - Correct Spelling Automatically (**untick**)
 
 **Finder**
   - View
-    - Show Path Bar
+    - Show Path Bar (**tick**)
   - Right-click in Finder
     - View options
-      - Show Library folder
+      - Show Library folder (**tick**)
 </div>
 
 Or for Finder if you prefer setting flags in the terminal:
@@ -104,10 +104,9 @@ Probably the fastest terminal out there with a native UI and GPU acceleration. I
 </p>
 </div>
 
-If you're still not convinced, then note that Ghostty gets around 500 FPS on this classic terminal emulator tester via DOOM fire. https://github.com/const-void/DOOM-fire-zig/. You can try with yours and see the difference. Also, see [here](https://www.youtube.com/watch?v=cPaGkEesw20&t=3015s) to see the output speed of plaintext English IO and then Japanese on Ghostty, which is about 10x faster than iTerm2 and faster than Alacritty.
+If you're still not convinced, then note that Ghostty gets around 500 FPS on this classic terminal emulator tester via [DOOM fire](https://github.com/const-void/DOOM-fire-zig/). You can try with yours and see the difference. Also, see [here](https://www.youtube.com/watch?v=cPaGkEesw20&t=3015s) to see the output speed of plaintext English IO and then Japanese on Ghostty, which is about 10x faster than iTerm2 and faster than Alacritty.
 
-Also, the Ghostty is the personal project of Mitchell Hashimoto, who is a very cool guy - go check him out: https://mitchellh.com/writing/ghostty-and-useful-zig-patterns.
-
+Also, the Ghostty is the personal project of Mitchell Hashimoto, who is a very cool guy - go check him out: https://mitchellh.com.
 
 ### Sudoless access
 Since this is your personal machine we don't want to get prompted for a password for sudo-required operations. Add the following by typing `sudo visudo`. Note - this is the safe command, do not edit the sudo file directly or you can lock yourself out of your system. For the following, ensure that you add the line **after** the line that says `includedir..`.
@@ -117,7 +116,6 @@ Since this is your personal machine we don't want to get prompted for a password
 
 username ALL=(ALL) NOPASSWD: ALL
 ```
-
 
 ### Shell
 For my shell I use Zsh. This is the vanilla shell for MacOS for some time now, so it will be present out of the box. 
@@ -131,14 +129,15 @@ aleye@Alexs-MacBook-Pro ~ % echo $0
 
 I am not currently using the _Oh My Zsh!_ framework because I haven't needed some of those features, and wanted to do some custom styling for the shell. This is definitely subjective, but I like the clean look of the original Ghostty shell rather than the fonts and styling of Oh My Zsh out of the box.
 
+
 ### Package Manager  
 
 In Linux, say Ubuntu, you have the `apt` package manager. This allows you to install software from your CLI, which works across your system. MacOS does not come with a package manager by default, so we will install [Homebrew](https://brew.sh/) to fix that. Either head to the website to find the installation instructions, or you can use the following:  
 
 ```zsh
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+/bin/bash -c "$(curl -fsSL \
+  https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
-
 
 #### Update Homebrew  
 
@@ -228,9 +227,13 @@ That's it. The `neofetch` package will do the rest. So everytime you login, you'
 <div class="flex justify-center pb-0">
   <img src="/os-neo.png" alt="OS neofetch" width="600" />
 </div>
-<div class="h2-tight">
-## Git  
+<div style="display: flex; justify-content: center;">
+<p id="t-start" class="text-center text-sm text-gray-600">
+    Terminal startup at this point.
+</p>
 </div>
+
+## Git
 Git will be installed by default on your system, after you have installed Homebrew (above) and run `brew update` to get the apple developer tools installed on your system. You can check with:  
 
 ```shell
@@ -244,6 +247,7 @@ If for some reason you do not have git, you can proceed with `brew install git`.
 ```shell
 brew install diff-so-fancy
 ```
+
 
 ### .gitconfig  
 
@@ -299,6 +303,7 @@ Then set the following in your ~/.gitconfig.
     mr = !sh -c 'git fetch $1 merge-requests/$2/head:mr-$1-$2 && git checkout mr-$1-$2' -
 ```
 
+
 Make sure to fill in the details for the `[User]` section above. For the aliases, they are self explanatory, e.g. you can do `git status` by typing `git s` now, which is faster.   
 
 The last alias of `mr` is for **GitLab-based** repositories and it allows you to check out a merge requests' code in your local environment, e.g.:
@@ -320,6 +325,7 @@ echo .DS_Store >> ~/.gitignore_global
 # Tell git to use this exclude file everywhere
 git config --global core.excludesfile ~/.gitignore_global
 ```
+
 
 ## Docker  
 
@@ -352,7 +358,7 @@ Here's a summary table of some features:
 - ✅* Podman uses a VM on macOS for Linux containers.  
 - ✅** Podman supports Compose v2 via podman-compose (not 100% feature parity with Docker Compose).  
 
-### Recommendations
+#### Recommendations
 For personal use, I recommend using `Docker Desktop` due to its ease of setup and no-fuss operation. Usually Docker Desktop will open on start up and be available in the background for any docker commands on the cli. It also installs all the necessary scripts, so you can run `docker` commands after.  
 
 For work, I recommend using `Rancher Desktop` due to its free and open source nature. It's easy to set up as well, but there's slightly more overhead and in practice it's a little less flush than Docker Desktop. However, of course if your company is already paying for Docker Desktop, feel free to stick with that.  
@@ -366,7 +372,6 @@ So finally, verify you setup is working via:
 docker ps
 CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS NAMES
 ```
-
 
 ## SDKs
 
@@ -391,13 +396,17 @@ javac 17.0.14
 #### Maven
 
 Manually install this on Mac:
-<div class="blog-tutorial">
-1. Goto https://repo.maven.apache.org/maven2/org/apache/maven/apache-maven/3.6.3/  
-2. Change the version to your desired version at the end of the URL  
-3. Download `apache-maven-<version>-bin.tar.gz`
-4. Open your terminal and run `tar xzvf Downloads/apache-maven-<version>-bin.tar.gz`
-5. Add maven to your path in your `~/.zshrc`:
 
+<div class="blog-tutorial">
+1. Go to the [maven website](https://repo.maven.apache.org/maven2/org/apache/maven/apache-maven/3.6.3/). Find the version you want to install, and update the URL in the following:  
+
+```shell  
+# Download selected Maven version from the website, e.g.  
+# https://repo.maven.apache.org/maven2/org/apache/maven/apache-maven/3.6.3/
+tar xzvf Downloads/apache-maven-<version>-bin.tar.gz
+```
+
+2. Add following to your ~/.zshrc
 ```shell
 export MAVEN_HOME=~/apache-maven-3.6.3
 export $PATH=$PATH:$MAVEN_HOME/bin
@@ -410,6 +419,8 @@ export $PATH=$PATH:$MAVEN_HOME/bin
 ```
 7. Confirm your installation with `mvn -version`
 </div>
+
+
 ### Python
 
 Sometimes you'll need different versions of Python running on your macbook. E.g., lots of things don't play nice together, and sometimes it's more complicated than a dockerfile setup. For that, let's use the Python Version Manager [pyenv](https://github.com/pyenv/pyenv).  
@@ -428,6 +439,7 @@ pyenv global 3.12.9
 # (optional) or locally, this directory
 pyenv local 3.12. 9
 ```
+
 
 Set your zsh config to pick up the shims. See the [official repo guide](https://github.com/pyenv/pyenv?tab=readme-ov-file#macos) for more info:  
 
@@ -471,9 +483,11 @@ Use the [Node Version Manager (NVM)](https://github.com/nvm-sh/nvm) instead of t
 
 From the official site above, install via:  
 
+
 ```shell
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
 ```
+
 
 Note that you can update the version number in that URL based on what becomes available in the future. Then, use it via:  
 
@@ -502,13 +516,14 @@ Here are some useful Integrated Development Environments (IDEs) with some reason
 
 Firstly, get the `code` command for your cli. This will allow you to open files and folders from your terminal via `code <folder>` for example.
 
+#### Install code command
 <div class="blog-tutorial">
-**Install code command**  
+
 
 Get command palette: `⌘+Shift+P`  
 - Shell Command: Install 'code' command in PATH
 
-**Extensions:**  
+#### Extensions 
 - Docker
 - Git Blame
 - Python (installs the following)
@@ -552,6 +567,7 @@ You can include a settings file in your repository under `.vscode/settings.json`
 }
 ```
 
+
 #### Thunder Client
 
 The thunder client extension allows you to easily sent API requests from within VSCode. To migrate your requests around to a different machine you can follow these steps.
@@ -576,6 +592,7 @@ The requests data files default storage location paths:
 - Remember to replace `userName` with your actual username.
 - Get the `thunderActivity.json` file and copy it to the location of this folder on your Mac.
 </div>
+
 
 ### IntelliJ IDEA
 
@@ -654,6 +671,7 @@ Since I am learning Japanese, here are some recommendations for language learner
 - Yomitan Popup Dictionary
 </div>
 
+
 ## TUIs
 
 Terminal User Interfaces.
@@ -670,10 +688,10 @@ For Terminal User Interfaces (TUIs), one I use is [spotify-tui](https://github.c
 </p>
 </div>
 
-### Quick setup
+#### Quick setup
 To get this working, we will need a daemon running for Spotify. Normally, you can just use the Spotify native UI application running on MacOS. If you do already use the Spotify native app, I recommend the following settings:  
 
-#### Spotify settings
+##### Spotify settings
 <div class="blog-tutorial">
 - Settings
   - Audio quality:
@@ -685,14 +703,15 @@ To get this working, we will need a daemon running for Spotify. Normally, you ca
     - Autodetect settings
 </div>
 
-#### Installation
+##### Installation
 Next, you'll need to install `spotify-tui` and add `spt` as an app so that we can get the stream into your terminal. 
 
 ```shell
 brew install spotify-tui
 ```
 
-#### Link account
+
+##### Link account
 Then, following the instructions in the  repo:  
 >spotify-tui needs to connect to Spotify's API in order to find music by name, play tracks etc.
 >
@@ -718,6 +737,7 @@ Then, following the instructions in the  repo:
 >And now you are ready to use the spotify-tui 🎉
 >
 >You can edit the config at anytime at `${HOME}/.config/spotify-tui/client.yml`. (for snap `${HOME}/snap/spt/current/.config/spotify-tui/client.yml`)
+
 
 #### Optional: Without the Spotify App
 You may have asked yourself "is there a way to cut out the Spotify app as the middleman in this setup?", and the answer is yes! For that type of set up, you'll still need a Spotify daemon running in the background, which you can get from [spotifyd](https://github.com/Spotifyd/spotifyd?tab=readme-ov-file). Start with:  
