@@ -1,18 +1,12 @@
 {
-  "extends": "astro/tsconfigs/base",
-  "include": [
-    "src",
-    "*.ts"
-  ],
-  "exclude": [
-    "node_modules",
-    "**/node_modules/*",
-    ".vscode",
-    "dist"
-  ],
-  "compilerOptions": {
-    "jsx": "react-jsx",
-    "strictNullChecks": true,
-    "allowJs": true
-  }
+	"extends": "astro/tsconfigs/strictest",
+	"compilerOptions": {
+		"baseUrl": ".",
+		"lib": ["es2022", "dom", "dom.iterable"],
+		"paths": {
+			"@/*": ["src/*"]
+		}
+	},
+	"include": [".astro/types.d.ts", "**/*"],
+	"exclude": ["node_modules", "**/node_modules/*", ".vscode", "dist"]
 }

@@ -1,145 +1,79 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* would like to ignore ./src/pages/og-image/[slug].png.ts */
+@import "tailwindcss";
+/* config for tailwindcss-typography plugin */
+@config "../../tailwind.config.ts";
+
+/* use a selector-based strategy for dark mode */
+@variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/* you could refactor below to use light-dark(), depending on your target audience */
+@theme {
+	--color-global-bg: oklch(98.48% 0 0);
+	--color-global-text: oklch(26.99% 0.0096 235.05);
+	--color-link: oklch(55.44% 0.0431 185.69);
+	--color-accent: oklch(55.27% 0.195 19.06);
+	--color-accent-2: oklch(18.15% 0 0);
+	--color-quote: oklch(55.27% 0.195 19.06);
+}
 
 @layer base {
-
-	/* default to dark theme */
-	:root {
-		color-scheme: light;
-		/* https://tailwindcss.com/docs/customizing-colors#using-css-variables */
-		--theme-bg: 0deg 0% 98%;
-		--theme-link: 172deg 18% 41%;
-		--theme-text: 203deg 11% 15%;
-		--theme-accent: 351deg 66% 48%;
-		--theme-accent-2: 0deg 0% 7%;
-		--theme-quote: 351deg 66% 48%;
-	}
-
-	:root.dark {
-		color-scheme: dark;
-		--theme-bg: 210deg 6% 12%;
-		--theme-link: 330deg 49% 67%;
-		--theme-text: 220deg 3% 79%;
-		--theme-accent: 159deg 64% 45%;
-		--theme-accent-2: 0deg 0% 93%;
-		--theme-quote: 102deg 100% 86%;
-	}
-
-	:root.light {
-		color-scheme: light;
-		/* https://tailwindcss.com/docs/customizing-colors#using-css-variables */
-		--theme-bg: 0deg 0% 98%;
-		--theme-link: 172deg 18% 41%;
-		--theme-text: 203deg 11% 15%;
-		--theme-accent: 351deg 66% 48%;
-		--theme-accent-2: 0deg 0% 7%;
-		--theme-quote: 351deg 66% 48%;
-	}
-
 	html {
+		color-scheme: light dark;
+		accent-color: var(--color-accent);
+		scrollbar-gutter: stable;
 		@apply scroll-smooth;
+
+		&[data-theme="light"] {
+			color-scheme: light;
+		}
+
+		&[data-theme="dark"] {
+			color-scheme: dark;
+			--color-global-bg: oklch(23.64% 0.0045 248);
+			--color-global-text: oklch(83.54% 0 264);
+			--color-link: oklch(70.44% 0.1133 349);
+			--color-accent: oklch(70.91% 0.1415 163.7);
+			--color-accent-2: oklch(94.66% 0 0);
+			--color-quote: oklch(94.8% 0.106 136.49);
+		}
 	}
 
 	html body {
-		@apply mx-auto flex min-h-screen flex-col bg-bgColor pt-16 font-mono text-sm font-normal text-textColor antialiased;
+		@apply mx-auto flex min-h-screen flex-col bg-global-bg pt-16 font-mono text-sm font-normal text-global-text antialiased;
 		@apply max-w-4xl px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16;
 	}
 
-	/* .sun { fill: transparent; }
-	.moon { fill: transparent; } */
-
-	@keyframes fadeInUp {
-		0% {
-			transform: translateY(100%);
-			opacity: 0;
-		}
-
-		100% {
-			transform: translateY(0%);
-			opacity: 1;
-		}
+	:target {
+		scroll-margin-block: 5ex;
 	}
 
-	.fade-in-up {
-		animation: 1.5s fadeInUp;
+	@view-transition {
+		navigation: auto;
 	}
 
-	ul {
-		list-style-type: disc;
-		padding-left: 30px;
-		/* Adjust left padding for indentation */
-		margin-left: 10;
-		margin-top: 10;
-		margin-bottom: 1em;
+	/* Astro image responsive styles, modified from -> https://docs.astro.build/en/guides/images/#responsive-image-styles */
+	:where([data-astro-image]) {
+		object-fit: var(--fit);
+		object-position: var(--pos);
 	}
-
-	ol {
-		list-style-type: decimal;
-		padding-left: 30px;
-		/* Adjust left padding for numbered lists */
-		margin-left: 10;
-		margin-top: 10;
-		margin-bottom: 1em;
+	[data-astro-image="full-width"] {
+		width: 100%;
 	}
-
-	#contents, #git, #t-start {
-		padding-top: 0rem;
+	[data-astro-image="constrained"] {
+		max-width: 100%;
 	}
+}
 
-	/* Mobile prose content fixes */
-	.prose {
-		word-wrap: break-word;
-		overflow-wrap: break-word;
-		hyphens: auto;
-	}
-
-	.prose h2 {
-		padding-top: 2rem;
-	}
-
-	.prose h3 {
-		padding-top: 1rem;
-	}
-
-	.prose h4, .prose h5 {
-		padding-top: 0.75rem;
-	}
-
-	.prose h1,
-	.prose h2,
-	.prose h3,
-	.prose h4,
-	.prose h5,
-	.prose h6 {
-		word-wrap: break-word;
-		overflow-wrap: break-word;
-	}
-
-	.prose p,
-	.prose li,
-	.prose blockquote {
-		word-wrap: break-word;
-		overflow-wrap: break-word;
-	}
-
-	.prose ol {
-		list-style-type: decimal;
-		padding-left: 2rem;
-		margin-left: 0;
-	}
-
-	.prose code {
-		word-break: break-word;
-		white-space: pre-wrap;
-	}
-
-	.prose pre {
-		overflow-x: auto;
-		word-break: break-all;
-		white-space: pre-wrap;
-	}
-
+@utility prose {
+	--tw-prose-body: var(--color-global-text);
+	--tw-prose-bold: var(--color-global-text);
+	--tw-prose-bullets: var(--color-global-text);
+	--tw-prose-code: var(--color-global-text);
+	--tw-prose-headings: var(--color-accent-2);
+	--tw-prose-hr: 0.5px dashed #666;
+	--tw-prose-links: var(--color-global-text);
+	--tw-prose-quotes: var(--color-quote);
+	--tw-prose-th-borders: #666;
 }
 
 /* Mobile hamburger menu styles */
@@ -160,7 +94,7 @@
 	.hamburger .line {
 		width: 2rem;
 		height: 0.2rem;
-		background: hsl(var(--theme-text));
+		background: var(--color-global-text);
 		border-radius: 10px;
 		transition: all 0.3s linear;
 		position: relative;
@@ -201,7 +135,7 @@
 		left: 0;
 		width: 100%;
 		height: 100vh;
-		background: hsl(var(--theme-bg));
+		background: var(--color-global-bg);
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
@@ -225,22 +159,4 @@
 	.hamburger {
 		display: none;
 	}
-}
-
-.blog-tutorial ul {
-	list-style-type: square;
-	margin-top: 0.25em;
-	margin-bottom: 0.25em;
-	padding-left: 1.2em;
-}
-
-.blog-tutorial li {
-	margin-top: 0;
-	margin-bottom: 0;
-	padding-top: 0;
-	padding-bottom: 0;
-}
-
-.blog-tutorial li::marker {
-	color: var(--theme-text);
 }

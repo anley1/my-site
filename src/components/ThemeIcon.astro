@@ -9,7 +9,7 @@
 >
 		<svg
 			id="sun-svg"
-			class="sun absolute start-1/2 top-1/2 h-7 w-7 -translate-x-1/2 -translate-y-1/2 scale-100 opacity-100 transition-all dark:scale-0 dark:opacity-0"
+			class="sun absolute start-1/2 top-1/2 h-7 w-7 -translate-x-1/2 -translate-y-1/2 scale-100 opacity-100 transition-all"
 			aria-hidden="true"
 			focusable="false"
 			stroke-width="1.5"
@@ -40,7 +40,7 @@
 		</svg>
 		<svg
 			id="moon-svg"
-			class="moon absolute start-1/2 top-1/2 h-7 w-7 -translate-x-1/2 -translate-y-1/2 scale-0 opacity-0 transition-all dark:scale-100 dark:opacity-100"
+			class="moon absolute start-1/2 top-1/2 h-7 w-7 -translate-x-1/2 -translate-y-1/2 scale-0 opacity-0 transition-all"
 			aria-hidden="true"
 			focusable="false"
 			stroke="currentColor"
@@ -63,9 +63,25 @@
     background: none;
   }
 
+  /* Show sun in light mode, hide in dark mode */
+  :global([data-theme="light"]) .sun { 
+    scale: 1; 
+    opacity: 1; 
+  }
+  :global([data-theme="dark"]) .sun { 
+    scale: 0; 
+    opacity: 0; 
+  }
 
-  :global(.dark) .sun { fill: transparent; }
-  /* :global(.dark) .moon { fill: white; } */
+  /* Show moon in dark mode, hide in light mode */
+  :global([data-theme="light"]) .moon { 
+    scale: 0; 
+    opacity: 0; 
+  }
+  :global([data-theme="dark"]) .moon { 
+    scale: 1; 
+    opacity: 1; 
+  }
 </style>
 
 <!-- Use is:inline on script, or astro:before-preparation to prevent FOUC -->
@@ -89,16 +105,25 @@
 	document.addEventListener("astro:page-load", () => {
 		const handleToggleClick = () => {
 			const element = document.documentElement;
-			element.classList.toggle("dark");
-
-			const isDarkMode = element.classList.contains("dark");
-			localStorage.setItem("theme", isDarkMode ? "dark" : "light");
+			const currentTheme = element.getAttribute("data-theme");
+			const newTheme = currentTheme === "dark" ? "light" : "dark";
+			
+			element.setAttribute("data-theme", newTheme);
+			localStorage.setItem("theme", newTheme);
 			toggleUtterancesTheme();
 		};
 		document
 			.getElementById("themeToggle")
 			?.addEventListener("click", handleToggleClick);
 	});
+
+	// Initial theme setup
+	const storedTheme = localStorage.getItem("theme");
+	const systemPrefersDark = window.matchMedia(
+		"(prefers-color-scheme: dark)",
+	).matches;
+	const theme = storedTheme || (systemPrefersDark ? "dark" : "light");
+	document.documentElement.setAttribute("data-theme", theme);
 
 	document.addEventListener("astro:after-swap", () => {
 		// use stored theme if available, otherwise use system preference, default to light
@@ -108,11 +133,7 @@
 		).matches;
 		const theme = storedTheme || (systemPrefersDark ? "dark" : "light");
 
-		if (theme === "light") {
-			document.documentElement.classList.remove("dark");
-		} else {
-			document.documentElement.classList.add("dark");
-		}
+		document.documentElement.setAttribute("data-theme", theme);
 		toggleUtterancesTheme();
 	});
 </script>

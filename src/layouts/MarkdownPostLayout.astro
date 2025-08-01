@@ -7,7 +7,7 @@ const { minutesRead } = Astro.props.frontmatter;
 ---
 
 <BaseLayout pageTitle={frontmatter.pageTitle}>
-    <div class="max-w-3xl mx-auto">        
+    <div class="bg-global-bg text-global-text mx-auto flex min-h-screen max-w-3xl flex-col px-4 pt-16 font-mono text-sm font-normal antialiased sm:px-8 grow break-words">        
         <!-- Metadata -->
         <div class="flex flex-wrap items-center gap-3 mb-4 text-xs text-gray-600 dark:text-gray-400">
             <span>Published {frontmatter.pubDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
@@ -37,9 +37,11 @@ const { minutesRead } = Astro.props.frontmatter;
             <Image src={frontmatter.image.url} alt={frontmatter.image.alt} class="w-full max-w-lg mx-auto rounded-lg shadow-md mb-6" loading="eager" />
         )}
 
+        <div class="flex flex-col gap-10 lg:flex-row lg:items-start">
         <!-- Content -->
-        <div class="prose prose-sm dark:prose-invert prose-headings:font-bold prose-headings:text-gray-900 dark:prose-headings:text-gray-100 prose-p:text-gray-700 dark:prose-p:text-gray-300 prose-p:leading-normal prose-p:mb-4 max-w-none">
-            <slot />
+            <div class="prose prose-sm prose-headings:font-semibold prose-headings:text-accent-2 prose-headings:before:absolute prose-headings:before:-ms-4 prose-headings:before:text-gray-600 prose-headings:hover:before:text-accent sm:prose-headings:before:content-['#'] sm:prose-th:before:content-none">
+                <slot />
+            </div>
         </div>
 
         <Utterances />
