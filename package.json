@@ -10,6 +10,7 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/markdown-remark": "^6.3.3",
     "@astrojs/mdx": "^2.3.1",
     "@astrojs/rss": "^3.0.0",
     "@astrojs/sitemap": "^3.4.1",
@@ -26,7 +27,7 @@
     "rehype-unwrap-images": "^1.0.0",
     "remark-math": "^6.0.0",
     "remark-toc": "^9.0.0",
-    "tailwindcss": "^3.4.17",
+    "tailwindcss": "3.4.17",
     "tm-themes": "^1.10.7"
   },
   "devDependencies": {

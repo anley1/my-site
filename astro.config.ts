@@ -5,6 +5,8 @@ import { remarkReadingTime } from './src/scripts/readingTime.ts';
 import remarkToc from 'remark-toc';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
+import { rehypeHeadingIds } from "@astrojs/markdown-remark";
+import expressiveCode from 'astro-expressive-code';
 import { rehypeAccessibleEmojis } from 'rehype-accessible-emojis';
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeExternalLinks from "rehype-external-links";
@@ -12,30 +14,29 @@ import rehypeUnwrapImages from "rehype-unwrap-images";
 import tailwind from "@astrojs/tailwind";
 
 
-import expressiveCode from "astro-expressive-code";
-
-
 // https://astro.build/config
 export default defineConfig({
   site: 'https://www.alexleye.com',
   integrations: [
     expressiveCode(),
-    mdx(), 
+    mdx(),
     sitemap(), 
-    tailwind()],
-    markdown: {
-      remarkPlugins: [[remarkToc, { heading: "contents", maxDepth: 4 }], remarkReadingTime, remarkMath],
-      rehypePlugins: [
-        rehypeAccessibleEmojis, 
-        rehypeKatex, 
-        rehypeUnwrapImages,
-        [
-          rehypeExternalLinks,
-          {
-            rel: ["noreferrer", "noopener"],
-            target: "_blank",
-          },
-        ],
-      ],
-    }
+    tailwind(),
+  ],
+  markdown: {
+    remarkPlugins: [[remarkToc, { heading: "contents", maxDepth: 4 }], remarkReadingTime, remarkMath],
+    rehypePlugins: [
+      rehypeKatex, 
+			rehypeHeadingIds,
+			[rehypeAutolinkHeadings, { behavior: "wrap", properties: { className: ["not-prose"] } }],
+			[
+				rehypeExternalLinks,
+				{
+					rel: ["noreferrer", "noopener"],
+					target: "_blank",
+				},
+			],
+			rehypeUnwrapImages,
+    ],
+  }
 });
