@@ -5,12 +5,11 @@ import { remarkReadingTime } from './src/scripts/readingTime.ts';
 import remarkToc from 'remark-toc';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
-import { rehypeHeadingIds } from "@astrojs/markdown-remark";
 import expressiveCode from 'astro-expressive-code';
-import { rehypeAccessibleEmojis } from 'rehype-accessible-emojis';
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeExternalLinks from "rehype-external-links";
 import rehypeUnwrapImages from "rehype-unwrap-images";
+import { rehypeHeadingIds } from "@astrojs/markdown-remark";
 import tailwind from "@astrojs/tailwind";
 
 
@@ -18,7 +17,13 @@ import tailwind from "@astrojs/tailwind";
 export default defineConfig({
   site: 'https://www.alexleye.com',
   integrations: [
-    expressiveCode(),
+    expressiveCode({
+      themes: ["github-light", "dracula"],
+      themeCssSelector: (theme) => `[data-theme="${theme.name}"]`,
+      styleOverrides: {
+        codeFontFamily: 'ui-monospace, SFMono-Regular, "SF Mono", Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
+      },
+    }),
     mdx(),
     sitemap(), 
     tailwind(),

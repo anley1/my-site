@@ -41,6 +41,20 @@ const {pageTitle} = Astro.props;
 		
 		<title>{pageTitle}</title>
 		
+		<!-- Theme initialization to prevent FOUC -->
+		<script is:inline>
+			const storedTheme = localStorage.getItem("theme");
+			const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+			const theme = storedTheme || (systemPrefersDark ? "dark" : "light");
+			
+			if (theme === "dark") {
+				document.documentElement.classList.add("dark");
+				document.documentElement.setAttribute("data-theme", "dracula");
+			} else {
+				document.documentElement.setAttribute("data-theme", "github-light");
+			}
+		</script>
+		
 		<!-- Structured Data -->
 		<script type="application/ld+json">
 			{

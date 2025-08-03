@@ -75,7 +75,7 @@
 			const theme =
 				localStorage.getItem("theme") === "light"
 					? "github-light"
-					: "github-dark";
+					: "dracula";
 			const message = {
 				type: "set-theme",
 				theme,
@@ -93,6 +93,7 @@
 
 			const isDarkMode = element.classList.contains("dark");
 			localStorage.setItem("theme", isDarkMode ? "dark" : "light");
+			element.setAttribute("data-theme", isDarkMode ? "dracula" : "github-light");
 			toggleUtterancesTheme();
 		};
 		document
@@ -110,8 +111,10 @@
 
 		if (theme === "light") {
 			document.documentElement.classList.remove("dark");
+			document.documentElement.setAttribute("data-theme", "github-light");
 		} else {
 			document.documentElement.classList.add("dark");
+			document.documentElement.setAttribute("data-theme", "dracula");
 		}
 		toggleUtterancesTheme();
 	});
