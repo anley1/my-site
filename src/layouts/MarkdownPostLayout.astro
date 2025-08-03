@@ -6,8 +6,7 @@ const { frontmatter } = Astro.props;
 const { minutesRead } = Astro.props.frontmatter;
 ---
 
-<BaseLayout pageTitle={frontmatter.pageTitle}>
-    <div class="max-w-3xl mx-auto flex flex-col">        
+<BaseLayout pageTitle={frontmatter.pageTitle}>       
         <!-- Metadata -->
         <div class="flex flex-wrap items-center gap-3 mb-4 text-xs text-gray-600 dark:text-gray-400">
             <span>Published {frontmatter.pubDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
@@ -43,5 +42,4 @@ const { minutesRead } = Astro.props.frontmatter;
         </div>
 
         <Utterances />
-    </div>
 </BaseLayout>
