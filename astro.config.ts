@@ -12,13 +12,12 @@ import rehypeUnwrapImages from "rehype-unwrap-images";
 import { rehypeHeadingIds } from "@astrojs/markdown-remark";
 import tailwind from "@astrojs/tailwind";
 
-
 // https://astro.build/config
 export default defineConfig({
   site: 'https://www.alexleye.com',
   integrations: [
     expressiveCode({
-      themes: ["github-light", "dracula"],
+      themes: ["github-dark", "dracula"],
       themeCssSelector: (theme) => `[data-theme="${theme.name}"]`,
       styleOverrides: {
         codeFontFamily: 'ui-monospace, SFMono-Regular, "SF Mono", Monaco, Consolas, "Liberation Mono", "Courier New", monospace',

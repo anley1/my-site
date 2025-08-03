@@ -69,6 +69,10 @@
 		padding-top: 0rem;
 	}
 
+	.prose h5 {
+		padding-top: 2rem;
+	}
+
 }
 
 /* Mobile hamburger menu styles */
