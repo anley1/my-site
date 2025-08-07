@@ -117,19 +117,6 @@ Since this is your personal machine we don't want to get prompted for a password
 username ALL=(ALL) NOPASSWD: ALL
 ```
 
-### Shell
-For my shell I use Zsh. This is the vanilla shell for MacOS for some time now, so it will be present out of the box. 
-
-To confirm you can run:  
-
-```zsh
-aleye@Alexs-MacBook-Pro ~ % echo $0
--/bin/zsh
-```
-
-I am not currently using the _Oh My Zsh!_ framework because I haven't needed some of those features, and wanted to do some custom styling for the shell. This is definitely subjective, but I like the clean look of the original Ghostty shell rather than the fonts and styling of Oh My Zsh out of the box.
-
-
 ### Package Manager  
 
 In Linux, say Ubuntu, you have the `apt` package manager. This allows you to install software from your CLI, which works across your system. MacOS does not come with a package manager by default, so we will install [Homebrew](https://brew.sh/) to fix that. Either head to the website to find the installation instructions, or you can use the following:  
@@ -160,18 +147,82 @@ brew install --cask \
         rectangle \
 ```
 
+### Shell
+For my shell I use Zsh. This is the vanilla shell for MacOS for some time now, so it will be present out of the box. 
+
+To confirm you can run:  
+
+```zsh
+echo $0
+```
+
+The output for zsh will be `-/bin/zsh`. From here I would go ahead and install the [_Oh My Zsh!_ framework](https://github.com/ohmyzsh/ohmyzsh), shortened as oh-my-zsh, which is open source and provides sensible defaults and extensive plugin support for zsh.
+
+
+```zsh
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+```
+
+#### Plugins
+You get access to a bunch of nifty plugins that you can utilise by including the name in your `plugins` list in your `~/.zshrc` file. I'll be adding some to my CLI prompt (below) but in the meantime you can check out the full list of plugins available here ([link](https://github.com/ohmyzsh/ohmyzsh/wiki/Plugins)). Two plugins that I include in my config are: `git` and `battery`.
+
+In your `~/.zshrc`, find the line with `plugins` and edit as follows:  
+
+```shell
+plugins=(git battery)
+
+source $ZSH/oh-my-zsh.sh
+```
+
+This will give you access to seeing your git information as well as battery status and percentage in your cli, respectively. More on that in the prompt section below.
+
 ### CLI Prompt  
 
-For a new MacBook, the shell prompt is likely of a default format including your username on the left, and some combination of firstname and hostname (computer's name) on the right of the `@` symbol. For example:  
+So we've discussed running commands and also the actual shell being used, but let's take a step back and talk about the visuals of your prompt too. This is of course totally subjective and up to you if you want to change, but since a lot of development is spent on the terminal, I like to talk about it.  
+
+Specifically, the shell prompt is the text you see on your terminal in front of where you type. For a new MacBook, the prompt is likely of a default format including your username on the left, and some combination of firstname and hostname (computer's name) on the right of the `@` symbol. For example:  
 
 ```zsh
 aleye@Alexs-MacBook-Pro ~ %
 ```
 
-For fun, I like to change this to my sushi prompt, where we have a  `🍣` in place of the hostname (such as YourNames-MacBook-Pro). The reason being that I love sushi. I might need to make a post about sushi just for myself. Moving on. To get this type of prompt, we first need to understand the prompt syntax and where it comes from. Since we are using the default zsh still here, then the prompt is the default set by zsh out of the box. you can find this via:
+Now if you installed oh-my-zsh like in the earlier step, it will transform into something like this - the prompt for the default ohmyzsh theme called `robbyrussel`:
 
 ```zsh
-aleye@Alexs-MacBook-Pro ~ % echo $PROMPT
+➜  ~
+```
+
+Boooooring!  
+For fun, I like to change this to a sushi prompt, where we have a  `🍣` on the left. The reason being that I love sushi. I might need to make a post about sushi just because. So anyways, if you are interested in this type of prompt personalisation, we first need to understand the prompt syntax and where it comes from. When we installed oh-my-zsh, it uses a specific theme called `robbyrussel` with the theme information defined in `~/.oh-my-zsh/themes/robbyrussell.zsh-theme`. 
+
+```shell
+# Default oh-my-zsh prompt
+PROMPT="%(?:%{$fg_bold[green]%}%1{➜%} :%{$fg_bold[red]%}%1{➜%} ) %{$fg[cyan]%}%c%{$reset_color%}"
+PROMPT+=' $(git_prompt_info)'
+```
+
+Let's update that to something more fun. In your `~/.zshrc` at the bottom:  
+
+```shell
+PROMPT='🍣 %{%}%c%{%} $(battery_pct_prompt) $(git_prompt_info) '
+```
+
+Note that to get the two dynamic elements of `battery_pct_prompt` and `git_prompt_info`, you will need the `battery` and `git` plugins included, respectively, as mentioned in the [plugins section above](#plugins).
+
+This will give you:
+
+```zsh
+🍣 my-site ⚡️ git:(master) ✗
+```
+
+We have the git branch and information there as well which is super handy - it will only appear when you are in a git repo. Also, now we have the battery percentage which updates on each command (percentage is shown if not plugged in, otherwise it is the `⚡️` symbol). I wanted to show the battery plugin more as an fyi, but I have that particular plugin removed in my daily terminal.
+
+#### Leave the Username/Hostname alone!
+
+You might want to stick with the username and/or hostname that ships out of the box. For example this is the default zsh prompt before oh-my-zsh gets applied:
+
+```zsh
+echo $PROMPT
 %n@%m %1~ %#
 ```
 
@@ -188,21 +239,7 @@ sudo scutil --get LocalHostName
 sudo scutil --get ComputerName
 ```
 
-Now, if you google around you'll find a ton of people telling you to update your `LocalHostName`, `HostName` or similar to get your preferred hostname in your cli prompt. Even, you can set the computer's name in the Apple Settings. However, this might impact your system in unexpected ways, such as if you are performing remote SSH or other network-related tasks. In this case, an emoji may not be accepted due to complexity of the characters. The less destructive method, as you might have guessed .. is to edit the prompt itself! 
-
-Let's do that with `vim ~/.zshrc`:  
-
-```bash
-PROMPT='%n@🍣 %1~ %#'
-```
-
-Restart your terminal, or `source ~/.zshrc`, and there you go!  
-
-```zsh
-aleye@🍣 ~ %
-```
-
-Nice. Now I want more sushi.  
+Now, if you google around you'll find a ton of people telling you to update your `LocalHostName`, `HostName` or similar to get your preferred hostname in your cli prompt. Even, you can set the computer's name in the Apple Settings. However, this might impact your system in unexpected ways, such as if you are performing remote SSH or other network-related tasks. In this case, an emoji may not be accepted due to complexity of the characters. The less destructive method, as we saw earlier is to edit the prompt itself.  
 
 
 ### Startup Messages
@@ -567,6 +604,17 @@ You can include a settings file in your repository under `.vscode/settings.json`
 }
 ```
 
+These settings will auto-sort your imports at the top of your file, and also apply formatting by the `black` formatter automatically on save. It will also ignore the auto-generated `__pycache__` folders and files, and use the `mypy` type checker as well.  
+
+For when you want to write documents in VSCode (or derivatives), you can disable the constant word suggestions that pop-up for every word you type via the following setting:
+
+```json
+  "editor.quickSuggestions": {
+    "other": "off"
+  }
+```
+
+I like to do this when writing notes and articles in MD, for example.
 
 #### Thunder Client
 
