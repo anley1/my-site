@@ -64,6 +64,10 @@ export default {
 							border: "1px dotted #666",
 							borderRadius: "2px",
 						},
+						"ul code, ol code, blockquote code": {
+							wordBreak: "break-all",
+							overflowWrap: "break-word",
+						},
 						blockquote: {
 							borderLeftWidth: "0",
 						},

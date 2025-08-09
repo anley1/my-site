@@ -19,9 +19,18 @@ const { minutesRead } = Astro.props.frontmatter;
         <!-- Title -->
         <h1 class="title text-xl sm:text-2xl font-bold mb-4 break-words overflow-hidden">{frontmatter.title}</h1>
 
+        <div class="flex flex-wrap items-center gap-x-3 mb-4">
         <!-- Description -->
-        <p class="text-sm text-gray-700 dark:text-gray-300 mb-4 leading-relaxed break-words overflow-hidden"><em>{frontmatter.description}</em></p>
-        
+        <p class="text-sm text-gray-700 dark:text-gray-300 leading-relaxed break-words overflow-hidden"><em>{frontmatter.description}</em></p>
+
+        {frontmatter.updatedDate && (
+            <span class="bg-quote/5 text-quote rounded-lg px-2 py-1 border border-dashed border-quote/30 text-xs">
+                Updated: {frontmatter.updatedDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}
+            </span>
+        )}
+        </div>
+
+
         <!-- Tags -->
         <div class="flex flex-wrap gap-2 mb-4">
             {frontmatter.tags.map((tag: string) => (

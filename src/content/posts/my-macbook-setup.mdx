@@ -1,7 +1,8 @@
 ---
 title: 'My MacBook Setup for Development'
 pubDate: 2025-02-27
-description: 'Dev guide to setting up your MacBook. (Updated 30 Jul 2025)'
+updatedDate: 2025-08-09
+description: 'Dev guide to setting up your MacBook.'
 author: 'Alex Leye'
 tags: ["macbook", "guide"]
 ---
@@ -651,7 +652,8 @@ This is the best IDE for any Java development imo.
   - SDK: Java 17 (select Homebrew option from the dropdown menu)
   - Language level: 17 (select LTS)
 - Maven:
-  - Add any of your custom settings to `~/.m2/settings.xml`
+  - Add any of your custom settings to:
+    - `~/.m2/settings.xml`
 - Docker:
   - Settings > 
     - Build, Execution, Deployment >
@@ -761,31 +763,34 @@ brew install spotify-tui
 
 ##### Link account
 Then, following the instructions in the  repo:  
->spotify-tui needs to connect to Spotify's API in order to find music by name, play tracks etc.
->
->Instructions on how to set this up will be shown when you first run the app.
->
->But here they are again:
->
->   1. Go to the Spotify dashboard
->   2. Click Create an app
->        - You now can see your Client ID and Client Secret
->   3. Now click Edit Settings
->   4. Add `http://localhost:8888/callback` to the Redirect URIs
->   5.  Scroll down and click Save
->   6. You are now ready to authenticate with Spotify!
->   7. Go back to the terminal
->   8. Run `spt`
->   9. Enter your `Client ID`
->   10. Enter your `Client Secret`
->   11. Press enter to confirm the default port (8888) or enter a custom port
->   12.  You will be redirected to an official Spotify webpage to ask you for permissions.
->   13. After accepting the permissions, you'll be redirected to localhost. If all goes well, the redirect URL will be parsed automatically and now you're done. If the local webserver fails for some reason you'll be redirected to a blank webpage that might say something like "Connection Refused" since no server is running. Regardless, copy the URL and paste into the prompt in the terminal.
->
->And now you are ready to use the spotify-tui 🎉
->
->You can edit the config at anytime at `${HOME}/.config/spotify-tui/client.yml`. (for snap `${HOME}/snap/spt/current/.config/spotify-tui/client.yml`)
+spotify-tui needs to connect to Spotify's API in order to find music by name, play tracks etc.
 
+*Instructions on how to set this up will be shown when you first run the app.*
+
+*But here they are again:*
+<div class="blog-tutorial">
+   1. *Go to the Spotify dashboard*
+   2. *Click Create an app*
+        - *You now can see your Client ID and Client Secret*
+   3. *Now click Edit Settings*
+   4. *Add `http://localhost:8888/callback` to the Redirect URIs*
+   5.  *Scroll down and click Save*
+   6. *You are now ready to authenticate with Spotify!*
+   7. *Go back to the terminal*
+   8. *Run `spt`*
+   9. *Enter your `Client ID`*
+   10. *Enter your `Client Secret`*
+   11. *Press enter to confirm the default port (8888) or enter a custom port*
+   12.  *You will be redirected to an official Spotify webpage to ask you for permissions.*
+   13. *After accepting the permissions, you'll be redirected to localhost. If all goes well, the redirect URL will be parsed automatically and now you're done. If the local webserver fails for some reason you'll be redirected to a blank webpage that might say something like "Connection Refused" since no server is running. Regardless, copy the URL and paste into the prompt in the terminal.*
+</div>
+
+*And now you are ready to use the spotify-tui 🎉*
+
+*You can edit the config at anytime at:*
+<div class="blog-tutorial">
+- *`${HOME}/.config/spotify-tui/client.yml`*
+</div>
 
 #### Optional: Without the Spotify App
 You may have asked yourself "is there a way to cut out the Spotify app as the middleman in this setup?", and the answer is yes! For that type of set up, you'll still need a Spotify daemon running in the background, which you can get from [spotifyd](https://github.com/Spotifyd/spotifyd?tab=readme-ov-file). Start with:  
