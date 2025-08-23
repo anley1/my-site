@@ -433,7 +433,13 @@ javac 17.0.14
 
 #### Maven
 
-Manually install this on Mac:
+Once Java is installed, you can go ahead and install Maven (or Gradle if you prefer) via Homebrew.
+
+```shell
+brew install maven
+```
+
+Or, if you prefer to install a specific version you can also install Maven manually:
 
 <div class="blog-tutorial">
 1. Go to the [maven website](https://repo.maven.apache.org/maven2/org/apache/maven/apache-maven/3.6.3/). Find the version you want to install, and update the URL in the following:  
@@ -686,6 +692,13 @@ This is the best IDE for any Java development imo.
 
 You can also use IntelliJ IDEA as your IDE for Python development, instead of installing PyCharm as well. But, the experience is slightly different - for example, you will need run configs imported for each repository.
 
+#### Disabling code suggestions
+
+By default, IntelliJ IDEA now ships with AI suggestions that pop-up inline as you type. This can be disturbing or unwanted such as when you are trying to learn a particular concept. To disable this feature:
+
+Settings > Editor > General > Inline Completion
+
+Untick the option for 'Enable local Full Line completion suggestions'.
 
 ## Browser
 
