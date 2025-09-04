@@ -155,7 +155,30 @@ Autoboxing and primitives
 ### Sets
 
 Ordered sets  
-TreeSet (Red - Black Tree)   
+TreeSet (Red - Black Tree)
+
+#### Check membership
+
+A quick way to check if two sets are disjoint is using the `Collections.disjoint(a,b)` method. For example:
+
+```java
+Set<Integer> a = new HashSet<>();
+a.add(1);
+a.add(2);
+
+Set<Integer> b = new HashSet<>();
+b.add(2);
+b.add(3);
+
+Collections.disjoint(a,b)
+// => output is false
+
+Set<Integer> c = new HashSet<>();
+c.add(4);
+Collections.disjoint(a,c); // => true
+Collections.disjoint(a,b); // => true
+```
+
 
 ### Strings
 
